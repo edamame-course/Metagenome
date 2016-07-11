@@ -1,8 +1,8 @@
 
 
 #Metagenome quality trimming
-Authored by Joshua Herr  
-[EDAMAME-2015 wiki](https://github.com/edamame-course/2015-tutorials/wiki)
+Authored by Jin Choi, based on Joshua Herr's tutorial
+[EDAMAME-2016 wiki](https://github.com/edamame-course/2016-tutorials/wiki)
 
 ***
 EDAMAME tutorials have a CC-BY [license](https://github.com/edamame-course/2015-tutorials/blob/master/LICENSE.md). _Share, adapt, and attribute please!_
@@ -30,7 +30,7 @@ We'll be using a tool which is not aware of paired-end reads. This is fine as th
 
 ## Quality Trimming Your Sequence Data
 
-1.  Start a ```m3.large``` machine from Amazon Web Services running the EDAMAME-2015 AWS ami (ami-af04f2c4).  This instance has about 8 GB of RAM, and 2 CPUs, and should be enough to complete the assembly of the example data set we will use.
+1.  Start a ```m4.large``` machine from Amazon Web Services running the EDAMAME-2015 AWS ami (ami-af04f2c4).  This instance has about 8 GB of RAM, and 2 CPUs, and should be enough to complete the assembly of the example data set we will use.
 
 **Note:** One of the issues with processing whole genome shotgun data is how long it takes for the computer to process many steps of the workflow.  This can be time consuming and you should consider using ```screen``` or ```tmux``` to ensure that an internet connection issue does not cause you to lose your workflow progress.
 
@@ -38,8 +38,8 @@ We'll be using a tool which is not aware of paired-end reads. This is fine as th
 
 Download the data:
 ```
-wget https://s3.amazonaws.com/edamame/EDAMAME_MG.tar.gz
-tar -zxvf EDAMAME_MG.tar.gz
+wget https://s3.amazonaws.com/edamame/infant_gut.sub.tar.gz
+tar -zxvf infant_gut.sub.tar.gz
 ```
 
 2.  First, let's get an idea of some quality stats from our data.  We're going to first use the ```fastx_quality_stats``` [script](http://hannonlab.cshl.edu/fastx_toolkit/commandline.html#fastq_statistics_usage) from the Hannon Lab's [fastx-toolkit](http://hannonlab.cshl.edu/fastx_toolkit/index.html) package.
