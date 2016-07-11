@@ -55,14 +55,8 @@ apt-get -y install samtools
 
 ## Download data
 First, download reference sequence.  @Jin add more detail here, what is the reference.
-```
-cd ~/
-mkdir mapping_counting
-cd mapping_counting
-curl -O http://athyra.idyll.org/~t/REL606.fa.gz
-gunzip REL606.fa.gz
-```
-Then, download sequencing file
+
+download sequencing file: this file is the first 100,000 sequences of original file
 ```
 curl -O ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR098/SRR098038/SRR098038.fastq.gz
 ```
@@ -70,14 +64,16 @@ curl -O ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR098/SRR098038/SRR098038.fastq.gz
 ## Do the mapping
 Now let’s map all of the reads to the reference. Start by indexing the reference genome:
 ```
-cd ~/mapping_counting
+cd ~/metagenome
 
-bowtie2-build REL606.fa REL_reference
+bowtie2-build megahit_out/final.contigs.fa reference
 
 ```
 Now, do the mapping of the raw reads to the reference genome (this would be done with -1 and -2 if these were paired-end reads):
 ```
-bowtie2 -x REL_reference -U SRR098038.fastq.gz -S SRR098038.sam
+for x in SRR*_1.sub.fastq.gz;
+  do bowtie2 -x reference -1 $x -2 ${x%_1*}_2.sub.fastq.gz -S ${x%_1*}.sam 2> ${x%_1*}.out;
+done
 ```
 
 This file contains all of the information about where each read hits on the reference.
@@ -85,26 +81,30 @@ This file contains all of the information about where each read hits on the refe
 Next, index the reference genome with samtools:
 
 ```
-samtools faidx REL606.fa
+samtools faidx megahit_out/final.contigs.fa
 ```
 
 Convert the SAM into a BAM file:
 @Jin - add details on why these steps
 
 ```
-
-samtools import REL606.fa.fai SRR098038.sam SRR098038.bam
+for x in *.sam;
+  do samtools import megahit_out/final.contigs.fa.fai $x $x.bam;
+done
 ```
 
 Sort the BAM file:
 ```
-samtools sort SRR098038.bam SRR098038.sorted
+for x in *.bam;
+  do samtools sort $x $x.sorted;
+done
 ```
 
 And index the sorted BAM file:
 ```
-samtools index SRR098038.sorted.bam
-
+for x in *.sorted.bam;
+  do samtools index $x;
+done
 ```
 
 ## Visualizing alignment
@@ -144,27 +144,21 @@ gunzip -c SRR098038.fastq.gz | wc
 ```
 
 will tell you how many lines there are in the FASTQ file (28186524). Reminder: there are four lines for each sequence.
-## Calling SNPs
-You can use samtools to call SNPs like so:
-```
-samtools mpileup -uD -f REL606.fa SRR098038.sorted.bam | bcftools view -bvcg - > SRR098038.raw.bcf
-```
-(See the ‘mpileup’ docs here.)
 
-Now convert the BCF into VCF:
-@Jin - need details on what this is.
-```
-bcftools view SRR098038.raw.bcf > SRR098038.vcf
-```
-You can check out the VCF file by using ‘tail’ to look at the bottom:
-```
-tail *.vcf
-```
-Each variant call line consists of the chromosome name (for E. coli REL606, there’s only one chromosome - rel606); the position within the reference; an ID (here always ‘.’); the reference call; the variant call; and a bunch of additional information about
+## Make count file
 
-Again, you can use ‘samtools tview’ and then type (for example) ‘g’ ‘rel606:4616538’ to go visit one of the positions. The format for the address to go to with ‘g’ is ‘chr:position’.
+```
+for x in *.sorted.bam
+do samtools idxstats $x > $x.idxstats.txt
+done
+```
+then make one file
+```
+git clone https://github.com/metajinomics/mapping_tools.git
+python mapping_tools/get_count_table.py *.idxstats.txt > counts.txt
+```
 
-You can read more about the VCF file format here.
 
-If you are interested in mapping metagenome file or transcriptome file, visit [here](https://github.com/metajinomics/tutorials_en/blob/gh-pages/metagenome/mapping_counting.md) for more tutorials
+
+If you are interested in SNP calling, visit [here](https://github.com/metajinomics/tutorials_en/blob/gh-pages/metagenome/counting-abundance-with-mapped-reads.md) for more tutorials
 @this tutorial isn't that different - I wouldn't reference it....
