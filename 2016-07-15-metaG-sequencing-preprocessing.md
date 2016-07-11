@@ -39,7 +39,8 @@ We'll be using a tool which is not aware of paired-end reads. This is fine as th
 Install software
 ```
 sudo apt-get update
-sudo apt-get install python-dev python-pip fastx-toolkit unzip
+sudo apt-get install python-dev python-pip fastx-toolkit unzip git zlib1g-dev default-jre
+sudo easy_install -U setuptools
 sudo pip install screed
 sudo pip install khmer
 ```
@@ -49,12 +50,13 @@ cd
 curl -O http://www.usadellab.org/cms/uploads/supplementary/Trimmomatic/Trimmomatic-0.36.zip
 unzip Trimmomatic-0.36.zip
 cd Trimmomatic-0.36/
-cp trimmomatic-0.36.jar /usr/local/bin
-cp -r adapters /usr/local/share/adapters
+sudo cp trimmomatic-0.36.jar /usr/local/bin
+sudo cp -r adapters /usr/local/share/adapters
 ```
 
 install megehit
 ```
+cd ~
 git clone https://github.com/voutcn/megahit.git
 cd megahit
 make
@@ -68,40 +70,28 @@ cd metagenome
 wget https://s3.amazonaws.com/edamame/infant_gut.sub.tar.gz
 tar -zxvf infant_gut.sub.tar.gz
 ```
-Trim and interleave (make two paired end file into one), First file (10 min):
+Trim and interleave (make two paired end file into one), First file:
 ```
-java -jar /usr/local/bin/trimmomatic-0.36.jar PE SRR492065_1.fastq.gz SRR492065_2.fastq.gz s1_pe s1_se s2_pe s2_se ILLUMINACLIP:/usr/local/share/adapters/TruSeq2-PE.fa:2:30:10
+java -jar /usr/local/bin/trimmomatic-0.36.jar PE SRR492065_1.sub.fastq.gz SRR492065_2.sub.fastq.gz s1_pe s1_se s2_pe s2_se ILLUMINACLIP:/usr/local/share/adapters/TruSeq2-PE.fa:2:30:10
 interleave-reads.py s?_pe > SRR492065.combined.fq
 ```
 Second file (10 min):
 ```
-java -jar /usr/local/bin/trimmomatic-0.36.jar PE SRR492066_1.fastq.gz SRR492066_2.fastq.gz s1_pe s1_se s2_pe s2_se ILLUMINACLIP:/usr/local/share/adapters/TruSeq2-PE.fa:2:30:10
+java -jar /usr/local/bin/trimmomatic-0.36.jar PE SRR492066_1.sub.fastq.gz SRR492066_2.sub.fastq.gz s1_pe s1_se s2_pe s2_se ILLUMINACLIP:/usr/local/share/adapters/TruSeq2-PE.fa:2:30:10
 interleave-reads.py s?_pe > SRR492066.combined.fq
 ```
 2.  First, let's get an idea of some quality stats from our data.  We're going to first use the ```fastx_quality_stats``` [script](http://hannonlab.cshl.edu/fastx_toolkit/commandline.html#fastq_statistics_usage) from the Hannon Lab's [fastx-toolkit](http://hannonlab.cshl.edu/fastx_toolkit/index.html) package.
 
 ```
-apt-get install fastx-toolkit
-fastx_quality_stats -i <filename>.fastq -o quality.txt
-
-cat quality.txt
+fastx_quality_stats -i SRR492065.combined.fq -o SRR492065.quality.txt
+cat SRR492065.quality.txt
 ```
 
 This will give us some idea of what we are dealing with.  We'll want to keep this in mind when we check the quality after trimming.
 
 Then we run this command:
 
-```
-fastq_quality_filter -i <filename>.fastq -Q33 -q 30 -p 50  -o <filename>.qc.fastq
-```
-
-filter
-```
-fastq_quality_filter -Q33 -q 30 -p 50 -i combined.fq > combined-trim.fq
-fastq_quality_filter -Q33 -q 30 -p 50 -i s1_se > s1_se.trim
-fastq_quality_filter -Q33 -q 30 -p 50 -i s2_se > s2_se.trim
-```
-filter (10 min)
+filter 
 ```
 fastq_quality_filter -Q33 -q 30 -p 50 -i SRR492065.combined.fq > SRR492065.combined.qc.fq
 fastq_quality_filter -Q33 -q 30 -p 50 -i SRR492066.combined.fq > SRR492066.combined.qc.fq
@@ -116,11 +106,11 @@ If when you are using your own data, the ```fastq_quality_filter``` complains ab
 For a sanity check, let's use the ```fastx_quality_stats``` script again to see what changed in our trimmed data files:
 
 ```
-fastx_quality_stats -i <filename>.qc.fastq -o qc_quality.txt
+fastx_quality_stats -i SRR492065.combined.qc.fq -o SRR492065.qc_quality.txt
 
-cat quality.txt
+cat SRR492065.quality.txt
 
-cat qc_quality.txt
+cat SRR492065.qc_quality.txt
 ```
 
 What are the differences between the raw data and the quality trimmed data?
