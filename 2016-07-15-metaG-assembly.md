@@ -30,6 +30,7 @@ Since this process can take a while and is prone to issues with remote computing
 Normalize everything to a coverage of 20. The normalize-by-media.py script keeps track of the number of times a particular kmer is present. The flag `-C` sets a median kmer coverage cutoff for sequence. In otherwords, if the median coverage of the kmers in a particular sequence is above this cutoff then the sequence is discarded, if it is below this cutoff then it is kept. We specify the length of kmer we want to analyze using the `-k` flag. The flags `-N` and `-x` work together to specify the amount of memory to be used by the program. As a rule of thumb, the two multiplied should be equal to the available memory(RAM) on your machine. You can check the available memory on your machine with `free -m`. For our m3.large instances we should typically have about 4GB of RAM free.    
 (20 min)
 ```
+cd ~/metagenome
 normalize-by-median.py -k 20 -C 20 -N 4 -x 1e9 -s normC20k20.kh *qc.fq
 ```
 
@@ -94,29 +95,36 @@ Taking that into consideration, we're going to run this code:
 You should slowly see something similar to the following output:
 
 ```
-23.0Gb memory in total.
-Using: 21.112Gb.
-MEGAHIT v0.2.1-beta
-[Thu Jun  25 09:53:10 2015] Start assembly. Number of CPU threads 8.
-[Thu Jun  25 09:53:10 2015] Extracting solid (k+1)-mers for k = 21
-[Thu Jun  25 09:59:09 2015] Building graph for k = 21
-[Thu Jun  25 10:00:49 2015] Assembling contigs from SdBG for k = 21
-[Thu Jun  25 10:05:00 2015] Extracting iterative edges from k = 21 to 31
-[Thu Jun  25 10:07:43 2015] Building graph for k = 31
-[Thu Jun  25 10:09:39 2015] Assembling contigs from SdBG for k = 31
-[Thu Jun  25 10:12:27 2015] Extracting iterative edges from k = 31 to 41
-[Thu Jun  25 10:13:34 2015] Building graph for k = 41
-[Thu Jun  25 10:15:35 2015] Assembling contigs from SdBG for k = 41
-[Thu Jun  25 10:18:06 2015] Extracting iterative edges from k = 41 to 51
-[Thu Jun  25 10:19:09 2015] Building graph for k = 51
-[Thu Jun  25 10:20:53 2015] Assembling contigs from SdBG for k = 51
-[Thu Jun  25 10:23:02 2015] Extracting iterative edges from k = 51 to 61
+7.0Gb memory in total.
+Using: 7.017Gb.
+MEGAHIT v1.0.6-3-gfb1e59b
+--- [Mon Jul 11 15:14:57 2016] Start assembly. Number of CPU threads 2 ---
+--- [Mon Jul 11 15:14:57 2016] Available memory: 8371847168, used: 7534662451
+--- [Mon Jul 11 15:14:57 2016] k list: 21,41,61,81,99 ---
+--- [Mon Jul 11 15:14:57 2016] Converting reads to binaries ---
+    [read_lib_functions-inl.h  : 209]     Lib 0 (abundfilt-all.gz): interleaved, 156468 reads, 100 max length
+    [utils.h                   : 126]     Real: 0.3885	user: 0.0872	sys: 0.1221	maxrss: 8204
+--- [Mon Jul 11 15:14:57 2016] Extracting solid (k+1)-mers for k = 21 ---
+--- [Mon Jul 11 15:15:03 2016] Building graph for k = 21 ---
+--- [Mon Jul 11 15:15:08 2016] Assembling contigs from SdBG for k = 21 ---
+--- [Mon Jul 11 15:15:16 2016] Local assembling k = 21 ---
+--- [Mon Jul 11 15:15:37 2016] Extracting iterative edges from k = 21 to 41 ---
+--- [Mon Jul 11 15:15:39 2016] Building graph for k = 41 ---
+--- [Mon Jul 11 15:15:42 2016] Assembling contigs from SdBG for k = 41 ---
+--- [Mon Jul 11 15:15:50 2016] Local assembling k = 41 ---
+--- [Mon Jul 11 15:16:21 2016] Extracting iterative edges from k = 41 to 61 ---
+--- [Mon Jul 11 15:16:22 2016] Building graph for k = 61 ---
+--- [Mon Jul 11 15:16:24 2016] Assembling contigs from SdBG for k = 61 ---
+--- [Mon Jul 11 15:16:30 2016] Local assembling k = 61 ---
+
 ```
 
 ...and this is going to run for a while (perhaps until a k of 91 or greater) and eventually at the end you'll see something like this:
 
 ```
-[Thu Jun  25 18:43:16 2015] Merging to output final contigs.
-[Thu Jun  25 18:43:18 2015] ALL DONE.
+--- [Mon Jul 11 15:17:57 2016] Assembling contigs from SdBG for k = 99 ---
+--- [Mon Jul 11 15:18:02 2016] Merging to output final contigs ---
+--- [STAT] 2764 contigs, total 1377587 bp, min 216 bp, max 15822 bp, avg 498 bp, N50 491 bp
+--- [Mon Jul 11 15:18:02 2016] ALL DONE. Time elapsed: 185.048481 seconds ---
 ```
 
