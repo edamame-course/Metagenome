@@ -32,7 +32,7 @@ mkdir assessment
 cd assessment
 ```
 
-Download some E. coli data. This data set (ecoli_ref-5m-trim.fastq.gz) is the trimmed data from the Chitsaz paper, E. coli reference sequencing.
+Download some data. This data set (ecoli_ref-5m-trim.fastq.gz) is the trimmed data from the Chitsaz paper, E. coli reference sequencing.
 ```
 curl -O https://s3.amazonaws.com/edamame/compare_assembly.tar.gz
 tar -zxvf compare_assembly.tar.gz
@@ -41,112 +41,59 @@ tar -zxvf compare_assembly.tar.gz
 ##Looking at the assembly
 Run QUAST:
 ```
-~/quast-3.0/quast.py spades.d/scaffolds.fasta -o report
+~/quast-3.0/quast.py pe.final.contigs.fa -o report_pe
 ```
 and then look at the report:
 ```
-less report/report.txt
-
+less report_pe/report.txt
 ```
 You should see:
 ```
 All statistics are based on contigs of size >= 500 bp, unless otherwise noted (e.g., "# contigs (>= 0 bp)" and "Total length (>= 0 bp)" include all contigs).
 
-Assembly                   scaffolds
-# contigs (>= 0 bp)        160
-# contigs (>= 1000 bp)     84
-Total length (>= 0 bp)     4571783
-Total length (>= 1000 bp)  4551354
-# contigs                  93
-Largest contig             264754
-Total length               4557807
-GC (%)                     50.75
-N50                        132618
-N75                        64692
-L50                        12
-L75                        24
-# N's per 100 kbp          0.00
+Assembly                   pe.final.contigs
+# contigs (>= 0 bp)        2982            
+# contigs (>= 1000 bp)     1295            
+Total length (>= 0 bp)     12952450        
+Total length (>= 1000 bp)  12137548        
+# contigs                  1855            
+Largest contig             215667          
+Total length               12533749        
+GC (%)                     39.42           
+N50                        17908           
+N75                        7410            
+L50                        151             
+L75                        427             
+# N's per 100 kbp          0.00 
 ```
 
-##Comparing and evaluating assemblies - QUAST
-Download the true reference genome:
+##Comparing and evaluating assemblies 
 ```
-cd /mnt/assembly
-curl -O https://s3.amazonaws.com/public.ged.msu.edu/ecoliMG1655.fa.gz
-gunzip ecoliMG1655.fa.gz
+~/quast-3.0/quast.py pe.final.contigs.fa pe.se.final.contigs.fa raw.final.contigs.fa -o report_compare
 ```
+then,
+```
+less report_compare/report.txt
+```
+You will see.
+```
+All statistics are based on contigs of size >= 500 bp, unless otherwise noted (e.g., "# contigs (>= 0 bp)" and "Total length (>= 0 bp)" include all contigs).
 
-and run QUAST again:
-```
-~/quast-3.0/quast.py -R ecoliMG1655.fa spades.d/scaffolds.fasta -o report
-```
-Note that here we’re looking at all the assemblies we’ve generated.
+Assembly                   pe.final.contigs  pe.se.final.contigs  raw.final.contigs
+# contigs (>= 0 bp)        2982              3284                 2976             
+# contigs (>= 1000 bp)     1295              1447                 1149             
+Total length (>= 0 bp)     12952450          12744624             13050315         
+Total length (>= 1000 bp)  12137548          11835839             12189601         
+# contigs                  1855              2127                 1719             
+Largest contig             215667            157021               232493           
+Total length               12533749          12313947             12590769         
+GC (%)                     39.42             39.56                39.47            
+N50                        17908             17634                22360            
+N75                        7410              6220                 8751             
+L50                        151               150                  132              
+L75                        427               453                  357              
+# N's per 100 kbp          0.00              0.00                 0.00
 
-Now look at the results:
-```
-less report/report.txt
-```
-and now we have a lot more information!
-
-## A second assembler - MEGAHIT
-Let’s try out the MEGAHIT assembler. MEGAHIT is primarily intended for metagenomes but works well on microbial genomes in general.
-
-The MEGAHIT source code is on GitHub, here: https://github.com/voutcn/megahit. Let’s go grab it and build it!
-
-```
-cd
-git clone https://github.com/voutcn/megahit.git
-cd megahit
-make
-```
-Now, let’s go run an assembly –
-```
-cd /mnt/assembly
-~/megahit/megahit --12 *.pe.fq -r *.se.fq
-```
-This will take about a minute, and the output will be placed in megahit_out/final.contigs.fa. Let’s evaluate it against the SPAdes assembly with QUAST:
-```
-cp spades.d/scaffolds.fasta spades-assembly.fa
-cp megahit_out/final.contigs.fa megahit-assembly.fa
-~/quast-3.0/quast.py -R ecoliMG1655.fa spades-assembly.fa \
-         megahit-assembly.fa -o report
-```
-Let’s look at the report!
-```
-less report/report.txt
-```
-
-## Reference-free comparison
-Above, we’ve been using the genome reference to do assembly comparisons – but often you don’t have one. What do you do to evaluate and compare assemblies without a reference?
-
-One interesting trick is to just run QUAST with one assembly as a reference, and the other N assemblies against it. My only suggestion is to first eliminate short, fragmented contigs from the assembly you’re going to use as a reference.
-
-Let’s try that, using extract-long-sequences.py from khmer:
-
-```
-extract-long-sequences.py -l 1000 spades-assembly.fa > spades-long.fa
-```
-and then re-run QUAST and put the output in report-noref/report.txt:
-```
-~/quast-3.0/quast.py -R spades-long.fa spades-assembly.fa \
-         megahit-assembly.fa -o report-noref
-```
-When you look at the report,
-
-```
-less report-noref/report.txt
-```
-
-take particular note of the following –
-
-```
-Assembly                     spades-assembly  megahit-assembly
-...
-Misassembled contigs length  0                814643
-# local misassemblies        0                9
-# unaligned contigs          9 + 0 part       7 + 14 part
-Unaligned length             6453             7404
-Genome fraction (%)          100.000          99.833
 ```
 
 #here
