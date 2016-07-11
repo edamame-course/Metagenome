@@ -18,23 +18,6 @@ Authored by Jin Choi for EDAMAME2016
 
 ## Install software for this tutorial
 
-Install khmer
-```
-cd
-python -m virtualenv env
-source env/bin/activate
-pip install -U setuptools
-pip install khmer==1.4.1
-```
-and download and compile the SPAdes assembler:
-```
-cd
-curl -O http://spades.bioinf.spbau.ru/release3.5.0/SPAdes-3.5.0.tar.gz
-tar xvf SPAdes-3.5.0.tar.gz
-cd SPAdes-3.5.0
-./spades_compile.sh
-export PATH="$PATH:$(pwd)/bin"
-```
 as well as Quast, software for evaluating the assembly against the known reference:
 ```
 cd
