@@ -38,9 +38,10 @@ We'll be using a tool which is not aware of paired-end reads. This is fine as th
 
 Install software
 ```
-apt-get install python-dev python-pip fastx-toolkit
-pip install screed
-pip install khmer
+sudo apt-get update
+sudo apt-get install python-dev python-pip fastx-toolkit
+sudo pip install screed
+sudo pip install khmer
 ```
 Install Trimmomatic
 ```
