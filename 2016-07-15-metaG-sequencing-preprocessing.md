@@ -2,7 +2,7 @@
 
 #Metagenome quality trimming
 Authored by Joshua Herr, with contributions from Jin Choi for EDAMAME2016  
-[EDAMAME-2015 wiki](https://github.com/edamame-course/2016-tutorials/wiki)
+[EDAMAME-2016 wiki](https://github.com/edamame-course/2016-tutorials/wiki)
 
 ***
 EDAMAME tutorials have a CC-BY [license](https://github.com/edamame-course/2015-tutorials/blob/master/LICENSE.md). _Share, adapt, and attribute please!_
