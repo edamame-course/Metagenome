@@ -93,8 +93,8 @@ Then we run this command:
 
 filter 
 ```
-fastq_quality_filter -Q33 -q 30 -p 50 -i SRR492065.combined.fq > SRR492065.combined.qc.fq
-fastq_quality_filter -Q33 -q 30 -p 50 -i SRR492066.combined.fq > SRR492066.combined.qc.fq
+fastq_quality_filter -q 30 -p 50 -i SRR492065.combined.fq > SRR492065.combined.qc.fq
+fastq_quality_filter -q 30 -p 50 -i SRR492066.combined.fq > SRR492066.combined.qc.fq
 ```
 
 This command first uses the ```fastq_quality_filter``` [script](http://hannonlab.cshl.edu/fastx_toolkit/commandline.html#fastq_quality_filter_usage) from Hannon Lab's [fastx-toolkit](http://hannonlab.cshl.edu/fastx_toolkit/index.html) to trim the data using Illumina-33 [Phred quality score](http://en.wikipedia.org/wiki/Phred_quality_score). 
@@ -107,9 +107,7 @@ For a sanity check, let's use the ```fastx_quality_stats``` script again to see 
 
 ```
 fastx_quality_stats -i SRR492065.combined.qc.fq -o SRR492065.qc_quality.txt
-
 cat SRR492065.quality.txt
-
 cat SRR492065.qc_quality.txt
 ```
 
