@@ -39,7 +39,7 @@ We'll be using a tool which is not aware of paired-end reads. This is fine as th
 Install software
 ```
 sudo apt-get update
-sudo apt-get install python-dev python-pip fastx-toolkit
+sudo apt-get install python-dev python-pip fastx-toolkit unzip
 sudo pip install screed
 sudo pip install khmer
 ```
