@@ -49,17 +49,10 @@ export PATH
 
 Install SamTools.  
 ```
-apt-get -y install samtools
+sudo apt-get -y install samtools
 ```
 @Jin - add what is samtools and why use it
 
-## Download data
-First, download reference sequence.  @Jin add more detail here, what is the reference.
-
-download sequencing file: this file is the first 100,000 sequences of original file
-```
-curl -O ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR098/SRR098038/SRR098038.fastq.gz
-```
 
 ## Do the mapping
 Now let’s map all of the reads to the reference. Start by indexing the reference genome:
@@ -126,16 +119,16 @@ For the Tablet viewer, click on the link and get it installed on your local comp
 ## counting alignments
 This command:
 ```
-samtools view -c -f 4 SRR098038.bam
+samtools view -c -f 4 SRR492065.sam.bam.sorted.bam
 ```
-will count how many reads DID NOT align to the reference (207029).
+will count how many reads DID NOT align to the reference (130196).
 
 This command:
 
 ```
-samtools view -c -F 4 SRR098038.bam
+samtools view -c -F 4 SRR492065.sam.bam.sorted.bam
 ```
-will count how many reads DID align to the reference (6839602).
+will count how many reads DID align to the reference (69804).
 
 And this command:
 
@@ -143,7 +136,7 @@ And this command:
 gunzip -c SRR098038.fastq.gz | wc
 ```
 
-will tell you how many lines there are in the FASTQ file (28186524). Reminder: there are four lines for each sequence.
+will tell you how many lines there are in the FASTQ file (100,000). Reminder: there are four lines for each sequence.
 
 ## Make count file
 
