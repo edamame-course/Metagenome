@@ -17,43 +17,27 @@ Authored by Jin Choi for EDAMAME2016
 
 
 ## Install software for this tutorial
-
-as well as Quast, software for evaluating the assembly against the known reference:
+Quast
 ```
 cd
 curl -L http://sourceforge.net/projects/quast/files/quast-3.0.tar.gz/download > quast-3.0.tar.gz
 tar xvf quast-3.0.tar.gz
 ```
+
 ## Getting the data
 Now, let’s create a working directory:
 ```
-cd /mnt
-mkdir assembly
-cd assembly
+cd ~/metagenome
+mkdir assessment
+cd assessment
 ```
 
 Download some E. coli data. This data set (ecoli_ref-5m-trim.fastq.gz) is the trimmed data from the Chitsaz paper, E. coli reference sequencing.
 ```
-curl -O https://s3.amazonaws.com/public.ged.msu.edu/ecoli_ref-5m-trim.fastq.gz
-```
-Now, pull out the paired reads:
-```
-extract-paired-reads.py ecoli_ref-5m-trim.fastq.gz
-mv ecoli_ref-5m-trim.fastq.gz.se ecoli_ref-5m-trim.se.fq
-mv ecoli_ref-5m-trim.fastq.gz.pe ecoli_ref-5m-trim.pe.fq
+curl -O https://s3.amazonaws.com/edamame/compare_assembly.tar.gz
+tar -zxvf compare_assembly.tar.gz
 ```
 
-## Running an assembly
-Now, let’s run an assembly:
-```
-spades.py --12 ecoli_ref-5m-trim.pe.fq -s ecoli_ref-5m-trim.se.fq -o spades.d
-```
-This will take about 15 minutes; it should end with:
-```
-* Corrected reads are in /mnt/assembly/spades.d/corrected/
-* Assembled contigs are in /mnt/assembly/spades.d/contigs.fasta (contigs.fastg)
-* Assembled scaffolds are in /mnt/assembly/spades.d/scaffolds.fasta (scaffolds.fastg)
-```
 ##Looking at the assembly
 Run QUAST:
 ```
