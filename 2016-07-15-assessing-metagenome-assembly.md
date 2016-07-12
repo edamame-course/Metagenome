@@ -92,10 +92,11 @@ L75                        427
 ```
 
 ##Comparing and evaluating assemblies 
+Let's compare three assembly. The result from last tutorial, which used only paired end 'pe.final.contigs.fa', include single end 'pe.se.final.contigs.fa'and assembly from raw read 'raw.final.contigs.fa'. Those assebmly is done from full data (instead of substituted data). Note, When you compare assembly, all assembly sould be done from same dataset other than that, it dose not make sense. 
 ```
 ~/quast-3.0/quast.py pe.final.contigs.fa pe.se.final.contigs.fa raw.final.contigs.fa -o report_compare
 ```
-then,
+then, open the result:
 ```
 less report_compare/report.txt
 ```
