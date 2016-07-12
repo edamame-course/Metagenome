@@ -40,7 +40,7 @@ We'll be using a tool which is aware of paired-end reads but cannot treat paired
 Install software
 ```
 sudo apt-get update
-sudo apt-get install python-dev python-pip fastx-toolkit unzip git zlib1g-dev default-jre
+sudo apt-get -y install python-dev python-pip fastx-toolkit unzip git zlib1g-dev default-jre
 sudo easy_install -U setuptools
 sudo pip install screed
 sudo pip install khmer
@@ -92,8 +92,8 @@ This will give us some idea of what we are dealing with.  We'll want to keep thi
 
 Then we run this command:
 ```
-fastq_quality_filter -q 30 -p 50 -i SRR492065.combined.fq > SRR492065.combined.qc.fq
-fastq_quality_filter -q 30 -p 50 -i SRR492066.combined.fq > SRR492066.combined.qc.fq
+fastq_quality_filter -Q 33 -q 30 -p 50 -i SRR492065.combined.fq > SRR492065.combined.qc.fq
+fastq_quality_filter -Q 33 -q 30 -p 50 -i SRR492066.combined.fq > SRR492066.combined.qc.fq
 ```
 
 This command first uses the ```fastq_quality_filter``` [script](http://hannonlab.cshl.edu/fastx_toolkit/commandline.html#fastq_quality_filter_usage) from Hannon Lab's [fastx-toolkit](http://hannonlab.cshl.edu/fastx_toolkit/index.html) to trim the data using Illumina-33 [Phred quality score](http://en.wikipedia.org/wiki/Phred_quality_score). 
