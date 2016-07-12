@@ -30,7 +30,7 @@ We'll be using a tool which is not aware of paired-end reads. This is fine as th
 
 ## Quality Trimming Your Sequence Data
 
-1.  Start a ```m4.large``` machine from Amazon Web Services running the EDAMAME-2015 AWS ami (ami-af04f2c4).  This instance has about 8 GB of RAM, and 2 CPUs, and should be enough to complete the assembly of the example data set we will use.
+1.  Start a ```m4.large``` machine from Amazon Web Services.  This instance has about 8 GB of RAM, and 2 CPUs, and should be enough to complete the assembly of the example data set we will use. However, this may NOT enough for your REAL FULL SIZE DATA. You may use 125 GB of RAM, and 8 CPUs or bigger. 
 
 **Note:** One of the issues with processing whole genome shotgun data is how long it takes for the computer to process many steps of the workflow.  This can be time consuming and you should consider using ```screen``` or ```tmux``` to ensure that an internet connection issue does not cause you to lose your workflow progress.
 
@@ -62,7 +62,7 @@ cd megahit
 make
 ```
 
-Download the data (2.4Gb, 10 min):
+Download the data: The tutorial data is from [Sharon et al. 2013](http://www.ncbi.nlm.nih.gov/pubmed/22936250); it’s two data points from an infant gut sample. And it is a subsituted file, first 100,000 sequences. 
 ```
 cd
 mkdir metagenome
@@ -75,7 +75,7 @@ Trim and interleave (make two paired end file into one), First file:
 java -jar /usr/local/bin/trimmomatic-0.36.jar PE SRR492065_1.sub.fastq.gz SRR492065_2.sub.fastq.gz s1_pe s1_se s2_pe s2_se ILLUMINACLIP:/usr/local/share/adapters/TruSeq2-PE.fa:2:30:10
 interleave-reads.py s?_pe > SRR492065.combined.fq
 ```
-Second file (10 min):
+Second file:
 ```
 java -jar /usr/local/bin/trimmomatic-0.36.jar PE SRR492066_1.sub.fastq.gz SRR492066_2.sub.fastq.gz s1_pe s1_se s2_pe s2_se ILLUMINACLIP:/usr/local/share/adapters/TruSeq2-PE.fa:2:30:10
 interleave-reads.py s?_pe > SRR492066.combined.fq
