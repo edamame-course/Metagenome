@@ -26,7 +26,8 @@ Some sequencing centers will remove library adapters (our sequencing center does
 
 As always, you want to make sure you read the manual of any tool to be sure you know what the tool is doing to your data and if that is the right tool for the job.  Knowing which tool to use is very important -- you wouldn't use a saw to put a nail in a piece of wood, would you?
 
-We'll be using a tool which is not aware of paired-end reads. This is fine as the downstream metagenome assembly program we will use (megahit) only takes single end reads.  If you choose to use a different assembly program that accepts (or even requires!) paired-end reads then you will have to choose a tool to do trimming on the paired-ends.  
+We'll be using a tool which is aware of paired-end reads but cannot treat paired-end and single-end together (megahit).
+
 
 ## Quality Trimming Your Sequence Data
 
@@ -80,7 +81,7 @@ Second file:
 java -jar /usr/local/bin/trimmomatic-0.36.jar PE SRR492066_1.sub.fastq.gz SRR492066_2.sub.fastq.gz s1_pe s1_se s2_pe s2_se ILLUMINACLIP:/usr/local/share/adapters/TruSeq2-PE.fa:2:30:10
 interleave-reads.py s?_pe > SRR492066.combined.fq
 ```
-2.  First, let's get an idea of some quality stats from our data.  We're going to first use the ```fastx_quality_stats``` [script](http://hannonlab.cshl.edu/fastx_toolkit/commandline.html#fastq_statistics_usage) from the Hannon Lab's [fastx-toolkit](http://hannonlab.cshl.edu/fastx_toolkit/index.html) package.
+1.  First, let's get an idea of some quality stats from our data.  We're going to first use the ```fastx_quality_stats``` [script](http://hannonlab.cshl.edu/fastx_toolkit/commandline.html#fastq_statistics_usage) from the Hannon Lab's [fastx-toolkit](http://hannonlab.cshl.edu/fastx_toolkit/index.html) package.
 
 ```
 fastx_quality_stats -i SRR492065.combined.fq -o SRR492065.quality.txt
@@ -90,8 +91,6 @@ cat SRR492065.quality.txt
 This will give us some idea of what we are dealing with.  We'll want to keep this in mind when we check the quality after trimming.
 
 Then we run this command:
-
-filter 
 ```
 fastq_quality_filter -q 30 -p 50 -i SRR492065.combined.fq > SRR492065.combined.qc.fq
 fastq_quality_filter -q 30 -p 50 -i SRR492066.combined.fq > SRR492066.combined.qc.fq
@@ -101,7 +100,7 @@ This command first uses the ```fastq_quality_filter``` [script](http://hannonlab
 
 Note that you can modify the ```fastq_quality_filter``` [script](http://hannonlab.cshl.edu/fastx_toolkit/commandline.html#fastq_quality_filter_usage) to trim to any specific length or quality level that you desire.  As always, read the [manual](http://hannonlab.cshl.edu/fastx_toolkit/commandline.html#fastq_quality_filter_usage) for information on how to use a script.
 
-If when you are using your own data, the ```fastq_quality_filter``` complains about invalid quality scores, first try removing the -Q33 in the command.  There are numerous types of quality scores and you may have older data which did not use the Q33 output.  For more information on fastq quality scores, [this is a good overview](http://en.wikipedia.org/wiki/FASTQ_format).
+ There are numerous types of quality scores.  For more information on fastq quality scores, [this is a good overview](http://en.wikipedia.org/wiki/FASTQ_format).
 
 For a sanity check, let's use the ```fastx_quality_stats``` script again to see what changed in our trimmed data files:
 
