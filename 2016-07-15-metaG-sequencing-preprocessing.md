@@ -62,7 +62,7 @@ cd megahit
 make
 ```
 
-Download the data: The tutorial data is from [Sharon et al. 2013](http://www.ncbi.nlm.nih.gov/pubmed/22936250); it’s two data points from an infant gut sample. And it is a subsituted file, first 100,000 sequences. 
+Download the data: The tutorial data is from [Sharon et al. 2013](http://www.ncbi.nlm.nih.gov/pubmed/22936250); it’s two data points from an infant gut sample. And it is a subsampled file, 100,000 sequences. 
 ```
 cd
 mkdir metagenome
