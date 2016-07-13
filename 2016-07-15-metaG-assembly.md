@@ -32,11 +32,16 @@ Normalize everything to a coverage of 20. The normalize-by-media.py script keeps
 ```
 sed s/' '/'_'/ SRR492065.combined.qc.fq > SRR492065.combined.ns.qc.fq
 sed s/' '/'_'/ SRR492066.combined.qc.fq > SRR492066.combined.ns.qc.fq
+extract-paired-reads.py SRR492065.combined.qc.fq
+extract-paired-reads.py SRR492066.combined.qc.fq
 ```
 now, run
 ```
 cd ~/metagenome
-normalize-by-median.py -k 20 -C 20 -N 4 -x 1e9 -s normC20k20.kh -p *qc.fq
+
+normalize-by-median.py --ksize 20 -R diginorm.report -C 20 --n_tables 4 --max-tablesize 1e8 -p -s normC20k20.kh SRR492065.combined.fq.pe
+normalize-by-median.py --ksize 20 -R diginorm.report -C 20 --n_tables 4 --max-tablesize 1e8 -p -s normC20k20.kh SRR492066.combined.fq.pe
+
 ```
 -k: k-mer size, -C: k-mer coverage level above is above this numer the read is not kept, -N: number of thread(?) or number of mailroom(?) (Actually number of table), -x: memory use, -s: save the k-mer countgraph to disk, -p: paired-end, last argument: file name
 
