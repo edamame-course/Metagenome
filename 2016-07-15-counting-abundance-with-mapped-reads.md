@@ -137,7 +137,3 @@ python mapping_tools/get_count_table.py *.idxstats.txt > counts.txt
 less counts.txt
 ```
 
-
-
-If you are interested in SNP calling, visit [here](https://github.com/metajinomics/tutorials_en/blob/gh-pages/metagenome/counting-abundance-with-mapped-reads.md) for more tutorials
-@this tutorial isn't that different - I wouldn't reference it....
