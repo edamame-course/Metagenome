@@ -122,4 +122,22 @@ L75                        427               453                  357
 # N's per 100 kbp          0.00              0.00                 0.00
 
 ```
+This is the statistics using EDAMAME pipeline
+```
+All statistics are based on contigs of size >= 500 bp, unless otherwise noted (e.g., "# contigs (>= 0 bp)" and "Total length (>= 0 bp)" include all contigs).
 
+Assembly                   final.contigs
+# contigs (>= 0 bp)        2736         
+# contigs (>= 1000 bp)     1055         
+Total length (>= 0 bp)     12995608     
+Total length (>= 1000 bp)  12194353     
+# contigs                  1589         
+Largest contig             213777       
+Total length               12570544     
+GC (%)                     39.43        
+N50                        30216        
+N75                        10230        
+L50                        102          
+L75                        285          
+# N's per 100 kbp          0.00  
+```
