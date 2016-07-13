@@ -60,14 +60,6 @@ sudo cp trimmomatic-0.36.jar /usr/local/bin
 sudo cp -r adapters /usr/local/share/adapters
 ```
 
-Install Megahit - a program that we will use to assemble reads
-```
-cd ~
-git clone https://github.com/voutcn/megahit.git
-cd megahit
-make
-```
-
 Download the data: The tutorial data is from [Sharon et al. 2013](http://www.ncbi.nlm.nih.gov/pubmed/22936250); it’s two data points from an infant gut sample. And it is a subsampled file so that we can do this tutorial in some reasonable amount of time, 100,000 sequences. Go to the home directory, make a directory named `metagenome`, change directores into the folder, download data, then unzip the data or decompress the data file. 
 ```
 cd
@@ -83,6 +75,7 @@ First, let's trim the sequencing adapters from our reads (these are artificial n
 ```
 java -jar /usr/local/bin/trimmomatic-0.36.jar PE SRR492065_1.sub.fastq.gz SRR492065_2.sub.fastq.gz s1_pe s1_se s2_pe s2_se ILLUMINACLIP:/usr/local/share/adapters/TruSeq3-PE.fa:2:30:10
 interleave-reads.py s?_pe > SRR492065.combined.fq
+cat s1_se s2_se > SRR492065.single.fq
 ```
 
 Do this again for the second metagenome.
@@ -90,6 +83,7 @@ Do this again for the second metagenome.
 ```
 java -jar /usr/local/bin/trimmomatic-0.36.jar PE SRR492066_1.sub.fastq.gz SRR492066_2.sub.fastq.gz s1_pe s1_se s2_pe s2_se ILLUMINACLIP:/usr/local/share/adapters/TruSeq3-PE.fa:2:30:10
 interleave-reads.py s?_pe > SRR492066.combined.fq
+cat s1_se s2_se > SRR492066.single.fq
 ```
 
 Here's the breakdown of these commands:
