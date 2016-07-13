@@ -42,10 +42,7 @@ Now, we're going to run the "normalization" of our datasets to a coverage of 20,
 
 ```
 cd ~/metagenome
-
-normalize-by-median.py --ksize 20 -R diginorm.report -C 20 --n_tables 4 --max-tablesize 1e8 -p -s normC20k20.kh SRR492065.combined.fq.pe
-normalize-by-median.py --ksize 20 -R diginorm.report -C 20 --n_tables 4 --max-tablesize 1e8 -p -s normC20k20.kh SRR492066.combined.fq.pe
-
+normalize-by-median.py --ksize 20 -R diginorm.report -C 20 --n_tables 4 --max-tablesize 1e8 -p -s normC20k20.kh SRR49206?.combined.qc.fq.pe
 ```
 -k: k-mer size, -C: k-mer coverage level above is above this numer the read is not kept, -N: number of thread(?) or number of mailroom(?) (Actually number of table), -x: memory use, -s: save the k-mer countgraph to disk, -p: paired-end, last argument: file name
 
