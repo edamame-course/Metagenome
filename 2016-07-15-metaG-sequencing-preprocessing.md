@@ -106,6 +106,9 @@ Then we run this command:
 ```
 fastq_quality_filter -Q 33 -q 30 -p 50 -i SRR492065.combined.fq > SRR492065.combined.qc.fq
 fastq_quality_filter -Q 33 -q 30 -p 50 -i SRR492066.combined.fq > SRR492066.combined.qc.fq
+
+fastq_quality_filter -Q 33 -q 30 -p 50 -i SRR492065.single.fq > SRR492065.single.qc.fq
+fastq_quality_filter -Q 33 -q 30 -p 50 -i SRR492066.single.fq > SRR492066.single.qc.fq
 ```
 Under the hood:
 -Q: Phred quality score, -q: Minimum quality score to keep, -p: Minimum percent of bases that must have [-q] quality, -i: input file, >: save output into file
