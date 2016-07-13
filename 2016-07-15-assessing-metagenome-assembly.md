@@ -59,6 +59,8 @@ Now, let’s create a working directory:
 cd ~/metagenome
 mkdir assessment
 cd assessment
+wget https://s3.amazonaws.com/edamame/compare_assembly.tar.gz
+tar -zxvf compare_assembly.tar.gz
 ```
 
 Now we can take a look at our assembly using QUAST. **From the ~/metagenomics/assessment** run the following line of code. 
@@ -69,7 +71,7 @@ Run QUAST:
 ```
 Once QUAST has finished running, change into the quast_output directory and use `ls` to take a look at all of the files it created. Use `less` to examine the `report.txt` file. 
 ```
-less report_pe/report.txt
+cat report_pe/report.txt
 ```
 You should see:
 ```
@@ -98,7 +100,7 @@ Let's compare three assembly. The result from last tutorial, which used only pai
 ```
 then, open the result:
 ```
-less report_compare/report.txt
+cat report_compare/report.txt
 ```
 You will see.
 ```
