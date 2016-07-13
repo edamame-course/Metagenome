@@ -119,31 +119,6 @@ cd ~/metagenome
 --12: paired end, [more option](https://github.com/voutcn/megahit)
 You should slowly see something similar to the following output:
 
-```
-7.0Gb memory in total.
-Using: 7.017Gb.
-MEGAHIT v1.0.6-3-gfb1e59b
---- [Mon Jul 11 15:14:57 2016] Start assembly. Number of CPU threads 2 ---
---- [Mon Jul 11 15:14:57 2016] Available memory: 8371847168, used: 7534662451
---- [Mon Jul 11 15:14:57 2016] k list: 21,41,61,81,99 ---
---- [Mon Jul 11 15:14:57 2016] Converting reads to binaries ---
-    [read_lib_functions-inl.h  : 209]     Lib 0 (abundfilt-all.gz): interleaved, 156468 reads, 100 max length
-    [utils.h                   : 126]     Real: 0.3885	user: 0.0872	sys: 0.1221	maxrss: 8204
---- [Mon Jul 11 15:14:57 2016] Extracting solid (k+1)-mers for k = 21 ---
---- [Mon Jul 11 15:15:03 2016] Building graph for k = 21 ---
---- [Mon Jul 11 15:15:08 2016] Assembling contigs from SdBG for k = 21 ---
---- [Mon Jul 11 15:15:16 2016] Local assembling k = 21 ---
---- [Mon Jul 11 15:15:37 2016] Extracting iterative edges from k = 21 to 41 ---
---- [Mon Jul 11 15:15:39 2016] Building graph for k = 41 ---
---- [Mon Jul 11 15:15:42 2016] Assembling contigs from SdBG for k = 41 ---
---- [Mon Jul 11 15:15:50 2016] Local assembling k = 41 ---
---- [Mon Jul 11 15:16:21 2016] Extracting iterative edges from k = 41 to 61 ---
---- [Mon Jul 11 15:16:22 2016] Building graph for k = 61 ---
---- [Mon Jul 11 15:16:24 2016] Assembling contigs from SdBG for k = 61 ---
---- [Mon Jul 11 15:16:30 2016] Local assembling k = 61 ---
-
-```
-
 ...and this is going to run for a while (perhaps until a k of 91 or greater) and eventually at the end you'll see something like this:
 
 ```
