@@ -33,7 +33,7 @@ Normalize everything to a coverage of 20. The normalize-by-media.py script keeps
 cd ~/metagenome
 normalize-by-median.py -k 20 -C 20 -N 4 -x 1e9 -s normC20k20.kh -p *qc.fq
 ```
--k: k-mer size, -C: k-mer coverage level above is above this numer the read is not kept, -N: ?, -x: memory use, -s: save the k-mer countgraph to disk, -p: paired-end, last argument: file name
+-k: k-mer size, -C: k-mer coverage level above is above this numer the read is not kept, -N: number of thread(?) or number of mailroom(?), -x: memory use, -s: save the k-mer countgraph to disk, -p: paired-end, last argument: file name
 
 Make sure you read the manual for this script, it's part of the [khmer](https://github.com/ged-lab/khmer) package.  This script produces a set of '.keep' files, as well as a normC20k20.kh database file.  The database file (it's a hash table in this case) can get quite large so keep in ming when you are running this script on a lot of data with not a lot of free space on your computer.
 
