@@ -31,14 +31,15 @@ Normalize everything to a coverage of 20. The normalize-by-media.py script keeps
 (20 min)
 ```
 cd ~/metagenome
-normalize-by-median.py -k 20 -C 20 -N 4 -x 1e9 -s normC20k20.kh *qc.fq
+normalize-by-median.py -k 20 -C 20 -N 4 -x 1e9 -s normC20k20.kh -p *qc.fq
 ```
+-k: k-mer size, -C: k-mer coverage level above is above this numer the read is not kept, -N: ?, -x: memory use, -s: save the k-mer countgraph to disk, -p: paired-end, last argument: file name
 
 Make sure you read the manual for this script, it's part of the [khmer](https://github.com/ged-lab/khmer) package.  This script produces a set of '.keep' files, as well as a normC20k20.kh database file.  The database file (it's a hash table in this case) can get quite large so keep in ming when you are running this script on a lot of data with not a lot of free space on your computer.
 
 # Removing Errors from our data
 We'll use the `filter-abund.py` script to trim off any k-mers that are in abundance of 1 in high-coverage reads.
-(15 min)
+The -V option is used to make this work better for variable coverage data sets:
 ```
 filter-abund.py -V normC20k20.kh *.keep
 ```
@@ -50,7 +51,7 @@ If you read the manual, you see that the `-V` option is used to make this work b
 This produces .abundfilt files containing the trimmed sequences.
 
 The process of error trimming could have orphaned reads, so split the PE file into still-interleaved and non-interleaved reads:
-(5 min)
+
 ```
 for i in *.keep.abundfilt
 do
@@ -91,7 +92,7 @@ Taking that into consideration, we're going to run this code:
 ```
 ~/megahit/megahit --12 abundfilt-all.gz
 ```
-
+--12: paired end, [more option](https://github.com/voutcn/megahit)
 You should slowly see something similar to the following output:
 
 ```
