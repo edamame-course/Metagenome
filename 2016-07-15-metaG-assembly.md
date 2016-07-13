@@ -28,7 +28,12 @@ Since this process can take a while and is prone to issues with remote computing
 
 # Run a Digital Normalization
 Normalize everything to a coverage of 20. The normalize-by-media.py script keeps track of the number of times a particular kmer is present. The flag `-C` sets a median kmer coverage cutoff for sequence. In otherwords, if the median coverage of the kmers in a particular sequence is above this cutoff then the sequence is discarded, if it is below this cutoff then it is kept. We specify the length of kmer we want to analyze using the `-k` flag. The flags `-N` and `-x` work together to specify the amount of memory to be used by the program. As a rule of thumb, the two multiplied should be equal to the available memory(RAM) on your machine. You can check the available memory on your machine with `free -m`. For our m3.large instances we should typically have about 4GB of RAM free.    
-(20 min)
+
+```
+sed s/' '/'_'/ SRR492065.combined.qc.fq > SRR492065.combined.ns.qc.fq
+sed s/' '/'_'/ SRR492066.combined.qc.fq > SRR492066.combined.ns.qc.fq
+```
+now, run
 ```
 cd ~/metagenome
 normalize-by-median.py -k 20 -C 20 -N 4 -x 1e9 -s normC20k20.kh -p *qc.fq
