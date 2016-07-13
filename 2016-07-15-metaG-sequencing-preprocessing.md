@@ -116,7 +116,7 @@ Note that you can modify the ```fastq_quality_filter``` [script](http://hannonla
                            -5....0........9.............................40 
                                  0........9.............................40 
                                     3.....9.............................40 
-  0.2......................26...31........41                              
+ <font color="red"> 0.2......................26...31........41       </font>                       
 
  S - Sanger        Phred+33,  raw reads typically (0, 40)
  X - Solexa        Solexa+64, raw reads typically (-5, 40)
@@ -124,7 +124,7 @@ Note that you can modify the ```fastq_quality_filter``` [script](http://hannonla
  J - Illumina 1.5+ Phred+64,  raw reads typically (3, 40)
      with 0=unused, 1=unused, 2=Read Segment Quality Control Indicator (bold) 
      (Note: See discussion above).
- L - Illumina 1.8+ Phred+33,  raw reads typically (0, 41)
+ <font color="red">L - Illumina 1.8+ Phred+33,  raw reads typically (0, 41)</font>
  ```
 
 For a sanity check, let's use the ```fastx_quality_stats``` script again to see what changed in our trimmed data files:
