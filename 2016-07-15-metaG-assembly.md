@@ -78,7 +78,7 @@ So, now we have a bunch of files, with similar names.  They are already pretty b
 
 Merge single end
 ```
-cat SRR492065.single.fq SRR492066.single.fq SRR492065.combined.qc.fq.se SRR492066.combined.qc.fq.se > all.single.fq
+cat SRR492065.single.qc.fq SRR492066.single.qc.fq SRR492065.combined.qc.fq.se SRR492066.combined.qc.fq.se > all.single.fq
 ```
 
 ```
