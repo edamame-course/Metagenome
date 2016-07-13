@@ -98,11 +98,20 @@ We've gone to the trouble of installing some assembly programs to the EDAMAME [a
 
 First read the [megahit manual here](https://github.com/voutcn/megahit).  The paper can be found here: [Li, D., Luo, R., Liu, C.M., Leung, C.M., Ting, H.F., Sadakane, K., Yamashita, H. and Lam, T.W., 2016. MEGAHIT v1.0: A Fast and Scalable Metagenome Assembler driven by Advanced Methodologies and Community Practices. Methods.](http://www.sciencedirect.com/science/article/pii/S1046202315301183).
 
+Install Megahit - a program that we will use to assemble reads
+```
+cd ~
+git clone https://github.com/voutcn/megahit.git
+cd megahit
+make
+```
+
 You'll want to read the (minimal) manual first, but we're going to use a couple of flags.  We have to set the memory you will use in the analysis, I suggest for our case to use `-m 0.9` which means we'll use 90% of the available CPU memory.  You don't want to use 100% or your computer will not be able to run essential operations. default:0.9
 
 
 Taking that into consideration, we're going to run this code:
 ```
+cd ~/metagenome
 ~/megahit/megahit --12 abundfilt-all.gz
 ```
 --12: paired end, [more option](https://github.com/voutcn/megahit)
