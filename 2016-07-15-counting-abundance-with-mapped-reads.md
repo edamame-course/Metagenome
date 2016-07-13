@@ -101,40 +101,24 @@ for x in *.sorted.bam;
 done
 ```
 
-## Visualizing alignment
-@Jin - why do you want to visualize? Add details -- Also, is this on their computer or on the server...tablet may be tricky for them to get installed.
- 
-At this point you can visualize with samtools tview or Tablet.
-
-‘samtools tview’ is a text interface that you use from the command line; run it like so:
-```
-samtools tview SRR098038.sorted.bam REL606.fa
-```
-The ‘.’s are places where the reads align perfectly in the forward direction, and the ‘,’s are places where the reads align perfectly in the reverse direction. Mismatches are indicated as A, T, C, G, etc.
-
-You can scroll around using left and right arrows; to go to a specific coordinate, use ‘g’ and then type in the contig name and the position. For example, type ‘g’ and then ‘rel606:553093<ENTER>’ to go to position 553093 in the BAM file.
-
-Use ‘q’ to quit.
-
-For the Tablet viewer, click on the link and get it installed on your local computer. Then, start it up as an application. To open your alignments in Tablet, you’ll need three files on your local computer: REL606.fa, SRR098042.sorted.bam, and SRR098042.sorted.bam.bai. You can copy them over using Dropbox, for example.
 ## counting alignments
 This command:
 ```
 samtools view -c -f 4 SRR492065.sam.bam.sorted.bam
 ```
-will count how many reads DID NOT align to the reference (130196).
+will count how many reads DID NOT align to the reference (77608).
 
 This command:
 
 ```
 samtools view -c -F 4 SRR492065.sam.bam.sorted.bam
 ```
-will count how many reads DID align to the reference (69804).
+will count how many reads DID align to the reference (122392).
 
 And this command:
 
 ```
-gunzip -c SRR098038.fastq.gz | wc
+gunzip -c SRR492065_1.sub.fastq.gz | wc
 ```
 
 will tell you how many lines there are in the FASTQ file (100,000). Reminder: there are four lines for each sequence.
@@ -150,6 +134,7 @@ then make one file
 ```
 git clone https://github.com/metajinomics/mapping_tools.git
 python mapping_tools/get_count_table.py *.idxstats.txt > counts.txt
+less counts.txt
 ```
 
 
