@@ -37,7 +37,7 @@ We'll be using a tool which is aware of paired-end reads but cannot treat paired
 
 **Pro-Tip:** You'll also want to keep in mind that these assemblies take a lot of computer power to run which can cost you some money -- for your own benefit, you can try to optimize your scripts on a desktop or laptop before you actually fire up the AWS instance of this size.
 
-Install software
+Install requirement software
 ```
 sudo apt-get update
 sudo apt-get -y install python-dev python-pip fastx-toolkit unzip git zlib1g-dev default-jre
@@ -89,6 +89,7 @@ java: run java program, -jar: run jar program, /usr/local/bin/trimmomatic-0.36.j
 fastx_quality_stats -i SRR492065.combined.fq -o SRR492065.quality.txt
 cat SRR492065.quality.txt
 ```
+-i: input file, -o: output file
 
 This will give us some idea of what we are dealing with.  We'll want to keep this in mind when we check the quality after trimming.
 
@@ -97,6 +98,7 @@ Then we run this command:
 fastq_quality_filter -Q 33 -q 30 -p 50 -i SRR492065.combined.fq > SRR492065.combined.qc.fq
 fastq_quality_filter -Q 33 -q 30 -p 50 -i SRR492066.combined.fq > SRR492066.combined.qc.fq
 ```
+-Q: Phred quality score, -q: Minimum quality score to keep, -p: Minimum percent of bases that must have [-q] quality, -i: input file, >: save output into file
 
 This command first uses the ```fastq_quality_filter``` [script](http://hannonlab.cshl.edu/fastx_toolkit/commandline.html#fastq_quality_filter_usage) from Hannon Lab's [fastx-toolkit](http://hannonlab.cshl.edu/fastx_toolkit/index.html) to trim the data using Illumina-33 [Phred quality score](http://en.wikipedia.org/wiki/Phred_quality_score). 
 
