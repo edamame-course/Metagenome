@@ -63,7 +63,7 @@ cd megahit
 make
 ```
 
-Download the data: The tutorial data is from [Sharon et al. 2013](http://www.ncbi.nlm.nih.gov/pubmed/22936250); it’s two data points from an infant gut sample. And it is a subsampled file, 100,000 sequences. Go to the home directory, make directory `metagenome`, change into the folder, download data, then unzip. 
+Download the data: The tutorial data is from [Sharon et al. 2013](http://www.ncbi.nlm.nih.gov/pubmed/22936250); it’s two data points from an infant gut sample. And it is a subsampled file, 100,000 sequences. Go to the home directory, make directory `metagenome`, change into the folder, download data, then unzip. This command will remove adapter.
 ```
 cd
 mkdir metagenome
@@ -81,7 +81,7 @@ Second file:
 java -jar /usr/local/bin/trimmomatic-0.36.jar PE SRR492066_1.sub.fastq.gz SRR492066_2.sub.fastq.gz s1_pe s1_se s2_pe s2_se ILLUMINACLIP:/usr/local/share/adapters/TruSeq2-PE.fa:2:30:10
 interleave-reads.py s?_pe > SRR492066.combined.fq
 ```
-
+java: run java program, -jar: run jar program, /usr/local/bin/trimmomatic-0.36.jar: name of the program with path, PE: paired-end, SRR492066_1.sub.fastq.gz: first pared-end, SRR492066_2.sub.fastq.gz: second paired-end, s1_pe: output of first file(paired-end), s1_se: output of first file(single-end), s2_pe: output of second file(paired-end), s2_se: output of second file(single-end), ILLUMINACLIP: use illumina clip, /usr/local/share/adapters/TruSeq2-PE.fa: adapter file with path, 2:30:10 : <seed mismatches(specifies the maximum mismatch count which will still allow a full match to be performed)>:<palindrome clip threshold(specifies how accurate the match between the two 'adapter ligated' reads must be for PE palindrome read alignment.)>:<simple clip threshold(specifies how accurate the match between any adapter etc. sequence must be against a read.)> [Here more detail](http://www.usadellab.org/cms/?page=trimmomatic)
 
 1.  First, let's get an idea of some quality stats from our data.  We're going to first use the ```fastx_quality_stats``` [script](http://hannonlab.cshl.edu/fastx_toolkit/commandline.html#fastq_statistics_usage) from the Hannon Lab's [fastx-toolkit](http://hannonlab.cshl.edu/fastx_toolkit/index.html) package.
 
