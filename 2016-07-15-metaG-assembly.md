@@ -76,6 +76,11 @@ done
 
 So, now we have a bunch of files, with similar names.  They are already pretty big - so to save size, we can compress these and combine multiple samples into one file.  Let's do this for all paired end files.
 
+Merge single end
+```
+cat SRR492065.single.fq SRR492066.single.fq SRR492065.combined.qc.fq.se SRR492066.combined.qc.fq.se > all.single.fq
+```
+
 ```
 gzip *abundfilt.pe
 cat *abundfilt.pe.gz > abundfilt-all.gz
@@ -112,7 +117,7 @@ You'll want to read the (minimal) manual first, but we're going to use a couple 
 Taking that into consideration, we're going to run this code:
 ```
 cd ~/metagenome
-~/megahit/megahit --12 abundfilt-all.gz
+~/megahit/megahit --12 abundfilt-all.gz -r all.single.fq
 ```
 --12: paired end, [more option](https://github.com/voutcn/megahit)
 You should slowly see something similar to the following output:
