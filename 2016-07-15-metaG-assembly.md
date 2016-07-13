@@ -1,7 +1,7 @@
 
-##Digital Normalization and Assembly
+##Digital Normalization and Metagenomic Assembly
 
-Authored by Joshua Herr with contribution from Jackson Sorensen and Jin Choi for EDAMAME2016     
+Authored by Jin Choi, Jackson Sorenson, and Joshua Herr for EDAMAME2016     
 
 [EDAMAME-2016 wiki](https://github.com/edamame-course/2016-tutorials/wiki)
 
@@ -11,13 +11,13 @@ EDAMAME tutorials have a CC-BY [license](https://github.com/edamame-course/2015-
 
 ##Overarching Goal  
 * This tutorial will contribute towards an understanding of **metagenome analysis**
-
+* It focuses on metagenomic assembly
 
 ##Learning Objectives
 * Use digital normalization to remove redundant data
 * Trim/Filter out errors from sequences by identifying low coverage kmers in high coverage areas
 * Understand the limitations and strengths of metagenome assembly
-* Assemble a metagenome with MEGAHIt, cite alternative assemblers available
+* Assemble a metagenome with MEGAHIt
 * Summarize and assess the assembly
 ***
 
@@ -27,15 +27,19 @@ We'll start using the files we generated in the previous step (quality trimming 
 Since this process can take a while and is prone to issues with remote computing (internet cutting out, etc.) make sure you're running in `screen` or `tmux` when connecting to your EC2 instance!
 
 # Run a Digital Normalization
-Normalize everything to a coverage of 20. The normalize-by-media.py script keeps track of the number of times a particular kmer is present. The flag `-C` sets a median kmer coverage cutoff for sequence. In otherwords, if the median coverage of the kmers in a particular sequence is above this cutoff then the sequence is discarded, if it is below this cutoff then it is kept. We specify the length of kmer we want to analyze using the `-k` flag. The flags `-N` and `-x` work together to specify the amount of memory to be used by the program. As a rule of thumb, the two multiplied should be equal to the available memory(RAM) on your machine. You can check the available memory on your machine with `free -m`. For our m3.large instances we should typically have about 4GB of RAM free.    
+We have found, based on mock communities, that the coverage you need to adequately assemble a 10-20 strain community is roughly 20x coverage.  However, in a metagenome, we can have varying coverages of genes, some much more than 20x.  Our goal will be to digitaly normalize our sequencing reads to a coverage of 20, basically to remove redundant reads.
+
+The normalize-by-media.py script keeps track of the number of times a particular kmer is present and allows us to estimate the observed coverage of each read. The flag `-C` sets a median kmer coverage cutoff for sequence. In otherwords, if the median coverage of the kmers in a particular sequence is above this cutoff then the sequence is discarded (or set aside); if it is below this cutoff then it is kept. We specify the length of kmer we want to analyze using the `-k` flag. The flags `-N` and `-x` work together to specify the amount of memory to be used by the program. As a rule of thumb, the two multiplied should be equal to the available memory(RAM) on your machine. You can check the available memory on your machine with `free -m`. For our m3.large instances we should typically have about 4GB of RAM free.    
+
+First, let's think about what happened after we did the quality filter step.  Its similar to the adapter-trimming step.  We'll get some orphans and we need to discriminate our paired and single ended reads for assembly.  We can do this with the following script which extracts paired reads.
 
 ```
-sed s/' '/'_'/ SRR492065.combined.qc.fq > SRR492065.combined.ns.qc.fq
-sed s/' '/'_'/ SRR492066.combined.qc.fq > SRR492066.combined.ns.qc.fq
 extract-paired-reads.py SRR492065.combined.qc.fq
 extract-paired-reads.py SRR492066.combined.qc.fq
 ```
-now, run
+
+Now, we're going to run the "normalization" of our datasets to a coverage of 20, reducing the dataset size for assembly and removing extra information that could contain sequencing errors.
+
 ```
 cd ~/metagenome
 
@@ -48,19 +52,20 @@ normalize-by-median.py --ksize 20 -R diginorm.report -C 20 --n_tables 4 --max-ta
 Make sure you read the manual for this script, it's part of the [khmer](https://github.com/ged-lab/khmer) package.  This script produces a set of '.keep' files, as well as a normC20k20.kh database file.  The database file (it's a hash table in this case) can get quite large so keep in ming when you are running this script on a lot of data with not a lot of free space on your computer.
 
 # Removing Errors from our data
-We'll use the `filter-abund.py` script to trim off any k-mers that are in abundance of 1 in high-coverage reads.
-The -V option is used to make this work better for variable coverage data sets:
+
+Just like in amplicon sequencing where you sometimes may want to remove singletons, we can also remove "low coverage" reads prior to assembly to improve our data quality as well as reduce the dataset size we need to assemble.
+
+If you read the manual, you see that the `-V` option is used to make this work better for variable coverage data sets, such as those you would find in metagenomic sequencing.  If you're using this tool for a genome sequencing project, you wouldn't use the `-V` flag.
+
 ```
 filter-abund.py -V normC20k20.kh *.keep
 ```
 
 The output from this step produces files ending in `.abundfilt` that contain the trimmed sequences.
 
-If you read the manual, you see that the `-V` option is used to make this work better for variable coverage data sets, such as those you would find in metagenomic sequencing.  If you're using this tool for a genome sequencing project, you wouldn't use the `-V` flag.
-
 This produces .abundfilt files containing the trimmed sequences.
 
-The process of error trimming could have orphaned reads, so split the PE file into still-interleaved and non-interleaved reads:
+As for most processing, now you still have data that yet again needs to process.  When you trimmed low abundant reads, you now have more orphans that you have to deal with -- and again you'll want to extract paired end reads.  The reason for doing this is because the programs that we use require it to be so and unless we want to write our own programs, we have to learn to get our data into the shape for a specific tool.  Its nice to know a little bit about for loops now:
 
 ```
 for i in *.keep.abundfilt
@@ -69,15 +74,14 @@ do
 done
 ```
 
-Now, we'll have a file (or list of files if you're using your own data) which will have the name: `{your-file}.qc.fq.keep.abundfilt`.  We're going to check the file integrity to make sure it's not faulty and we're going to clean up the names.
-
-Let's compress and rename your files:
+So, now we have a bunch of files, with similar names.  They are already pretty big - so to save size, we can compress these and combine multiple samples into one file.  Let's do this for all paired end files.
 
 ```
 gzip *abundfilt.pe
 cat *abundfilt.pe.gz > abundfilt-all.gz
 ```
 
+And we did all this....so now we can FINALLY assemble.
 
 ## A little background on assembly
 
@@ -94,9 +98,8 @@ We've gone to the trouble of installing some assembly programs to the EDAMAME [a
 
 First read the [megahit manual here](https://github.com/voutcn/megahit).  The paper can be found here: [Li, D., Luo, R., Liu, C.M., Leung, C.M., Ting, H.F., Sadakane, K., Yamashita, H. and Lam, T.W., 2016. MEGAHIT v1.0: A Fast and Scalable Metagenome Assembler driven by Advanced Methodologies and Community Practices. Methods.](http://www.sciencedirect.com/science/article/pii/S1046202315301183).
 
-You'll want to read the (minimal) manual first, but we're going to use a couple of flags:
-  1. We have to set the memory you will use in the analysis, I suggest for our case to use `-m 0.9` which means we'll use 90% of the available CPU memory.  You don't want to use 100% or your computer will not be able to run essential operations. defalut:0.9
-  2. Megahit requires us to set the length of the reads that will be ignored.  Just to be safe I have used `-l 500` here, but change it and see if it changes your assembly.  I would not go below your average read length.
+You'll want to read the (minimal) manual first, but we're going to use a couple of flags.  We have to set the memory you will use in the analysis, I suggest for our case to use `-m 0.9` which means we'll use 90% of the available CPU memory.  You don't want to use 100% or your computer will not be able to run essential operations. default:0.9
+
 
 Taking that into consideration, we're going to run this code:
 ```
@@ -139,3 +142,4 @@ MEGAHIT v1.0.6-3-gfb1e59b
 --- [Mon Jul 11 15:18:02 2016] ALL DONE. Time elapsed: 185.048481 seconds ---
 ```
 
+In the end, your assembled contigs will be in the folder called `megahit_out` and the file is final.contigs.fa.  How do you take a look at that?  And now you have a de novo assembled reference for these itty bitty metagenomes, now go try it on your own datasets.  The next step is how to you use this reference to estimate gene abundances.
