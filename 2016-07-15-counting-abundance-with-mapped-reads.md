@@ -6,6 +6,7 @@ Authored by Jin Choi for EDAMAME2016
 
 ### Overarching Goal
 * This tutorial will contribute towards an understanding of quantitative analyses of **metagenome data**
+* It focuses on estimating abundances of reads to an assembled reference.
 
 ### Learning Objectives
 * Understanding how to estimate abundances of reads in a representative gene reference
