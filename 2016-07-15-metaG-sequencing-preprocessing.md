@@ -37,7 +37,7 @@ We'll be using a tool which is aware of paired-end reads but cannot treat paired
 
 **Pro-Tip:** You'll also want to keep in mind that these assemblies take a lot of computer power to run which can cost you some money -- for your own benefit, you can try to optimize your scripts on a desktop or laptop before you actually fire up the AWS instance of this size.
 
-Install requirement software
+Install dependencies software
 ```
 sudo apt-get update
 sudo apt-get -y install python-dev python-pip fastx-toolkit unzip git zlib1g-dev default-jre
