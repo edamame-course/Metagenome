@@ -63,7 +63,7 @@ cd megahit
 make
 ```
 
-Download the data: The tutorial data is from [Sharon et al. 2013](http://www.ncbi.nlm.nih.gov/pubmed/22936250); it’s two data points from an infant gut sample. And it is a subsampled file, 100,000 sequences. 
+Download the data: The tutorial data is from [Sharon et al. 2013](http://www.ncbi.nlm.nih.gov/pubmed/22936250); it’s two data points from an infant gut sample. And it is a subsampled file, 100,000 sequences. Go to the home directory, make directory `metagenome`, change into the folder, download data, then unzip. 
 ```
 cd
 mkdir metagenome
@@ -81,6 +81,8 @@ Second file:
 java -jar /usr/local/bin/trimmomatic-0.36.jar PE SRR492066_1.sub.fastq.gz SRR492066_2.sub.fastq.gz s1_pe s1_se s2_pe s2_se ILLUMINACLIP:/usr/local/share/adapters/TruSeq2-PE.fa:2:30:10
 interleave-reads.py s?_pe > SRR492066.combined.fq
 ```
+
+
 1.  First, let's get an idea of some quality stats from our data.  We're going to first use the ```fastx_quality_stats``` [script](http://hannonlab.cshl.edu/fastx_toolkit/commandline.html#fastq_statistics_usage) from the Hannon Lab's [fastx-toolkit](http://hannonlab.cshl.edu/fastx_toolkit/index.html) package.
 
 ```
@@ -101,6 +103,29 @@ This command first uses the ```fastq_quality_filter``` [script](http://hannonlab
 Note that you can modify the ```fastq_quality_filter``` [script](http://hannonlab.cshl.edu/fastx_toolkit/commandline.html#fastq_quality_filter_usage) to trim to any specific length or quality level that you desire.  As always, read the [manual](http://hannonlab.cshl.edu/fastx_toolkit/commandline.html#fastq_quality_filter_usage) for information on how to use a script.
 
  There are numerous types of quality scores.  For more information on fastq quality scores, [this is a good overview](http://en.wikipedia.org/wiki/FASTQ_format).
+ ```
+  SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS.....................................................
+  ..........................XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX......................
+  ...............................IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII......................
+  .................................JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ......................
+  LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL....................................................
+  !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~
+  |                         |    |        |                              |                     |
+ 33                        59   64       73                            104                   126
+  0........................26...31.......40                                
+                           -5....0........9.............................40 
+                                 0........9.............................40 
+                                    3.....9.............................40 
+  0.2......................26...31........41                              
+
+ S - Sanger        Phred+33,  raw reads typically (0, 40)
+ X - Solexa        Solexa+64, raw reads typically (-5, 40)
+ I - Illumina 1.3+ Phred+64,  raw reads typically (0, 40)
+ J - Illumina 1.5+ Phred+64,  raw reads typically (3, 40)
+     with 0=unused, 1=unused, 2=Read Segment Quality Control Indicator (bold) 
+     (Note: See discussion above).
+ L - Illumina 1.8+ Phred+33,  raw reads typically (0, 41)
+ ```
 
 For a sanity check, let's use the ```fastx_quality_stats``` script again to see what changed in our trimmed data files:
 
