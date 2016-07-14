@@ -21,10 +21,6 @@ Authored by Jin Choi for EDAMAME2016
 
 ## Tutorial
 
-@Jin - add AMI information or what the assumption of the system they are on -- base Ubuntu I think
-@Jin - add an overview - what is the point, objective?  Imagine you have a metagenome created to study and the reference is...etc.
-@Jin - figure out dataset for assembly tutorials streamlining - this tutorial naturally goes after the assembly tutorial
-
 ### Setting up operating system
 ```
 apt-get update
@@ -33,53 +29,57 @@ apt-get -y install screen git curl gcc make g++ python-dev unzip \
         r-cran-gplots python-matplotlib sysstat
 ```
 
-## Install mapping software for this tutorial, Bowtie2 and SamTools
+## Install mapping software for this tutorial, Bowtie2 and SamTools.  BT2_HOME is the default name where Bowtie2 is installed.
+Bowtie2 is a read mapping software.
+
 ```
 cd 
 wget wget http://sourceforge.net/projects/bowtie-bio/files/bowtie2/2.2.9/bowtie2-2.2.9-linux-x86_64.zip
 unzip bowtie2-2.2.9-linux-x86_64.zip
 mv bowtie2-2.2.9 BT2_HOME
 ```
-@Jin - why use bowtie, what is it?  link to its documentation?
 
-Set up path (you need to set up path again if you are logged in later):
+Set up the path to installed software  (you need to set up path again if you are logged in later):
+
 ```
 PATH=$PATH:~/BT2_HOME
 export PATH
 ```
 
-Install SamTools.  
+Install SamTools.  SamTools is a software that we use to work with files that are outputted by Bowtie2.  It is a software that is often used with mapping tools.  Mapping files are generally very big and get unwieldy because of their size, SamTools helps us deal with these large files in a memory efficient approaches but sometimes it adds a lot of steps at a cost of speeding up analysis.
+
 ```
 sudo apt-get -y install samtools
 ```
-@Jin - add what is samtools and why use it
 
 
 ## Do the mapping
-Now let’s map all of the reads to the reference. Start by indexing the reference genome:
+Now let’s map all of the reads to the reference. Start by indexing the reference genome.  Indexing a reference stores in a memory efficient way on your computer:
+
 ```
 cd ~/metagenome
 
 bowtie2-build megahit_out/final.contigs.fa reference
 
 ```
-Now, do the mapping of the raw reads to the reference genome (this would be done with -1 and -2 if these were paired-end reads):
+Now, do the mapping of the raw reads to the reference genome (the -1 and -2 indicate the paired-end reads):
 ```
 for x in SRR*_1.sub.fastq.gz;
   do bowtie2 -x reference -1 $x -2 ${x%_1*}_2.sub.fastq.gz -S ${x%_1*}.sam 2> ${x%_1*}.out;
 done
 ```
 
-This file contains all of the information about where each read hits on the reference.
+This file contains all of the information about where each read hits our reference assembly contigs.
 
-Next, index the reference genome with samtools:
+Next, index the reference genome with samtools.  Another indexing step for memory efficiency for a different tool.  In the mapping world, get used to indexing since the files are huge:
 
 ```
 samtools faidx megahit_out/final.contigs.fa
 ```
 
 Convert the SAM into a BAM file:
-@Jin - add details on why these steps
+
+To reduce the size of a SAM file, you can convert it to a BAM file (SAM to BAM!) - put simply, this compresses your giant SAM file.
 
 ```
 for x in *.sam;
@@ -87,7 +87,7 @@ for x in *.sam;
 done
 ```
 
-Sort the BAM file:
+Sort the BAM file - again this is a memory saving and sometimes required step, we sort the data so its easy to query with our questions:
 ```
 for x in *.bam;
   do samtools sort $x $x.sorted;
@@ -101,7 +101,7 @@ for x in *.sorted.bam;
 done
 ```
 
-## counting alignments
+## Counting alignments
 This command:
 ```
 samtools view -c -f 4 SRR492065.sam.bam.sorted.bam
@@ -123,17 +123,19 @@ gunzip -c SRR492065_1.sub.fastq.gz | wc
 
 will tell you how many lines there are in the FASTQ file (100,000). Reminder: there are four lines for each sequence.
 
-## Make count file
+## Make a summary of the counts
 
 ```
 for x in *.sorted.bam
 do samtools idxstats $x > $x.idxstats.txt
 done
 ```
-then make one file
+We have some scripts that we use to process this file.
 ```
 git clone https://github.com/metajinomics/mapping_tools.git
 python mapping_tools/get_count_table.py *.idxstats.txt > counts.txt
 less counts.txt
 ```
+
+And there you are - you've created an abundance table.  Like an OTU count table, you can now use this file for statistical analyses when you do the mapping for multiple samples.
 
