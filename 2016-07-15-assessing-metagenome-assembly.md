@@ -32,10 +32,7 @@ Let's take a look at the `log` file first; go ahead and type `tail log`.  This w
 We're interested in this part:
 
 ```
-Simple path graph size: 81489
-Number of unitigs removed: 113
-Total length: 86752217, N50: 5464, Mean: 1482, number of contigs: 58510
-Maximum length: 234281
+[STAT] 3759 contigs, total 2935387 bp, min 206 bp, max 35461 bp, avg 781 bp, N50 885 bp
 ```
 
 Megahit actually runs numerous iterations of assemblies. Here we are looking at the last iteration and the number of contigs and total length of that iteration of the assembly. Later, we will be using QUAST to calculate all of our assembly stats.  There may be some odd terminology in some of the log file, [see this wiki for more information on terminology arising from the Celera Assembler](http://wgs-assembler.sourceforge.net/wiki/index.php/Celera_Assembler_Terminology) (the first assembly program designed for the Human Genome Project)
