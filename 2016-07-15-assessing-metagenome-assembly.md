@@ -138,3 +138,5 @@ L50                        102
 L75                        285          
 # N's per 100 kbp          0.00  
 ```
+
+Another way to evaluate an assembly is using read orientation.  Paired end sequencing are two reads that we prepare to be a specific distance apart and in opposite directions.  We can look at mapped paired end reads to a reference genome or an assembled metagenome to assess "paired end concordance."  But first, you need to know how to map reads...
