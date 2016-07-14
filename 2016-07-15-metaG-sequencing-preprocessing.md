@@ -73,7 +73,7 @@ This dataset contains paired end reads.  The paired end nature of datasets can b
 First, let's trim the sequencing adapters from our reads (these are artificial non-biological sequences and we want them out) and then we'll place all the paired end reads into one combined file. 
 
 ```
-java -jar /usr/local/bin/trimmomatic-0.36.jar PE SRR492065_1.sub.fastq.gz SRR492065_2.sub.fastq.gz s1_pe s1_se s2_pe s2_se ILLUMINACLIP:/usr/local/share/adapters/TruSeq3-PE.fa:2:30:10
+java -jar /usr/local/bin/trimmomatic-0.36.jar PE SRR492065_1.sub.fastq.gz SRR492065_2.sub.fastq.gz s1_pe s1_se s2_pe s2_se ILLUMINACLIP:/usr/local/share/adapters/TruSeq3-PE-2.fa:2:30:10
 interleave-reads.py s?_pe > SRR492065.combined.fq
 cat s1_se s2_se > SRR492065.single.fq
 ```
@@ -81,7 +81,7 @@ cat s1_se s2_se > SRR492065.single.fq
 Do this again for the second metagenome.
 
 ```
-java -jar /usr/local/bin/trimmomatic-0.36.jar PE SRR492066_1.sub.fastq.gz SRR492066_2.sub.fastq.gz s1_pe s1_se s2_pe s2_se ILLUMINACLIP:/usr/local/share/adapters/TruSeq3-PE.fa:2:30:10
+java -jar /usr/local/bin/trimmomatic-0.36.jar PE SRR492066_1.sub.fastq.gz SRR492066_2.sub.fastq.gz s1_pe s1_se s2_pe s2_se ILLUMINACLIP:/usr/local/share/adapters/TruSeq3-PE-2.fa:2:30:10
 interleave-reads.py s?_pe > SRR492066.combined.fq
 cat s1_se s2_se > SRR492066.single.fq
 ```
