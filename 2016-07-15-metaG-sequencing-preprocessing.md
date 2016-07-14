@@ -102,20 +102,6 @@ The innerworkings:  -i: input file, -o: output file
 
 This will give us some idea of what we are dealing with.  We'll want to keep this in mind when we check the quality after trimming.
 
-Then we run this command:
-```
-fastq_quality_filter -Q 33 -q 30 -p 50 -i SRR492065.combined.fq > SRR492065.combined.qc.fq
-fastq_quality_filter -Q 33 -q 30 -p 50 -i SRR492066.combined.fq > SRR492066.combined.qc.fq
-
-fastq_quality_filter -Q 33 -q 30 -p 50 -i SRR492065.single.fq > SRR492065.single.qc.fq
-fastq_quality_filter -Q 33 -q 30 -p 50 -i SRR492066.single.fq > SRR492066.single.qc.fq
-```
-Under the hood:
--Q: Phred quality score, -q: Minimum quality score to keep, -p: Minimum percent of bases that must have [-q] quality, -i: input file, >: save output into file
-
-This command first uses the ```fastq_quality_filter``` [script](http://hannonlab.cshl.edu/fastx_toolkit/commandline.html#fastq_quality_filter_usage) from Hannon Lab's [fastx-toolkit](http://hannonlab.cshl.edu/fastx_toolkit/index.html) to trim the data using Illumina-33 [Phred quality score](http://en.wikipedia.org/wiki/Phred_quality_score). 
-
-Note that you can modify the ```fastq_quality_filter``` [script](http://hannonlab.cshl.edu/fastx_toolkit/commandline.html#fastq_quality_filter_usage) to trim to any specific length or quality level that you desire.  As always, read the [manual](http://hannonlab.cshl.edu/fastx_toolkit/commandline.html#fastq_quality_filter_usage) for information on how to use a script.
 
  There are numerous types of quality scores.  For more information on fastq quality scores, [this is a good overview](http://en.wikipedia.org/wiki/FASTQ_format).
  ```
@@ -143,12 +129,6 @@ L - Illumina 1.8+ Phred+33,  raw reads typically (0, 41)
  ```
 
 For a sanity check, let's use the ```fastx_quality_stats``` script again to see what changed in our trimmed data files:
-
-```
-fastx_quality_stats -i SRR492065.combined.qc.fq -o SRR492065.qc_quality.txt
-cat SRR492065.quality.txt
-cat SRR492065.qc_quality.txt
-```
 
 What are the differences between the raw data and the quality trimmed data?
 
