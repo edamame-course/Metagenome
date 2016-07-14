@@ -41,6 +41,7 @@ Megahit actually runs numerous iterations of assemblies. Here we are looking at 
 ## Calculating summary statistics for our Metagenome assembly, using QUAST. 
 
 Quast is a program that will calculate some statistics about our metagenome assembly to give us an idea how well it assembled. Again, we do need to quickly install Quast and one of its dependencies so we can get it running on our machine. This shouldn't take very long. Copy each of the following lines of code one line at a time to install Quast.
+#### Install Quast
 ```
 cd
 curl -L http://sourceforge.net/projects/quast/files/quast-3.0.tar.gz/download > quast-3.0.tar.gz
