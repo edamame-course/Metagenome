@@ -33,16 +33,13 @@ The normalize-by-media.py script keeps track of the number of times a particular
 
 First, let's think about what happened after we did the quality filter step.  Its similar to the adapter-trimming step.  We'll get some orphans and we need to discriminate our paired and single ended reads for assembly.  We can do this with the following script which extracts paired reads.
 
-```
-extract-paired-reads.py SRR492065.combined.qc.fq
-extract-paired-reads.py SRR492066.combined.qc.fq
-```
+This have been removed
 
 Now, we're going to run the "normalization" of our datasets to a coverage of 20, reducing the dataset size for assembly and removing extra information that could contain sequencing errors.
 
 ```
 cd ~/metagenome
-normalize-by-median.py --ksize 20 -R diginorm.report -C 20 --n_tables 4 --max-tablesize 1e8 -p -s normC20k20.kh SRR49206?.combined.qc.fq.pe
+normalize-by-median.py --ksize 20 -R diginorm.report -C 20 --n_tables 4 --max-tablesize 1e9 -p -s normC20k20.kh SRR49206?.combined.fq
 ```
 -k: k-mer size, -C: k-mer coverage level above is above this numer the read is not kept, -N: number of thread(?) or number of mailroom(?) (Actually number of table), -x: memory use, -s: save the k-mer countgraph to disk, -p: paired-end, last argument: file name
 
