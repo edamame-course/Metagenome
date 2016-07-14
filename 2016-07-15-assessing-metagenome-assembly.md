@@ -6,6 +6,7 @@ Authored by Jin Choi for EDAMAME2016
 
 ### Overarching Goal
 * This tutorial will contribute towards an understanding the assembly of **metagenome data**
+* This tutorial will discuss assembly evaluation
 
 ### Learning Objectives
 * Understanding methods to evaluate an assembly
@@ -13,10 +14,6 @@ Authored by Jin Choi for EDAMAME2016
 * Comparing two different assemblies 
 
 ## Tutorial
-@Jin add details here - what is goign on -- do we want to assemble same dataset on two assemblers and compare?  Do we want to first get assembly statistics on one assembly?  Can we add paired info on the mapping tutorial or here?  That is a great method to evaluate assemblies.
-
-
-
 So, now we want to take a look at our assembly and see how it "looks".  We'll navigate into the folder we named (`megahit_assembly`) as the output by typing `cd megahit-assembly` and then `ls -lah` the contents of the folder.  You should see something like this:
 
 ```
