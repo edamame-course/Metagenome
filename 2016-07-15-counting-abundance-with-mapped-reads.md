@@ -21,7 +21,7 @@ Authored by Jin Choi for EDAMAME2016
 
 ## Tutorial
 
-## Install mapping software for this tutorial, Bowtie2 and SamTools.  BT2_HOME is the default name where Bowtie2 is installed.
+### Install mapping software for this tutorial, Bowtie2 and SamTools.  BT2_HOME is the default name where Bowtie2 is installed.
 Bowtie2 is a read mapping software.
 
 ```
