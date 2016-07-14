@@ -62,30 +62,30 @@ Now we can take a look at our assembly using QUAST. **From the ~/metagenomics/as
 ##Looking at the assembly
 Run QUAST:
 ```
-~/quast-3.0/quast.py pe.final.contigs.fa -o report_pe
+~/quast-3.0/quast.py pe.se.final.contigs.fa -o report
 ```
 Once QUAST has finished running, change into the quast_output directory and use `ls` to take a look at all of the files it created. Use `less` to examine the `report.txt` file. 
 ```
-cat report_pe/report.txt
+cat report/report.txt
 ```
 You should see:
 ```
 All statistics are based on contigs of size >= 500 bp, unless otherwise noted (e.g., "# contigs (>= 0 bp)" and "Total length (>= 0 bp)" include all contigs).
 
-Assembly                   pe.final.contigs
-# contigs (>= 0 bp)        2707            
-# contigs (>= 1000 bp)     1064            
-Total length (>= 0 bp)     12946382        
-Total length (>= 1000 bp)  12168690        
-# contigs                  1581            
-Largest contig             232526          
-Total length               12532010        
-GC (%)                     39.45           
-N50                        30749           
-N75                        10062           
-L50                        95              
-L75                        275             
-# N's per 100 kbp          0.00   
+Assembly                   pe.se.final.contigs
+# contigs (>= 0 bp)        2670               
+# contigs (>= 1000 bp)     1021               
+Total length (>= 0 bp)     12958914           
+Total length (>= 1000 bp)  12177316           
+# contigs                  1537               
+Largest contig             282362             
+Total length               12541412           
+GC (%)                     39.44              
+N50                        32048              
+N75                        10401              
+L50                        86                 
+L75                        258                
+# N's per 100 kbp          0.00  
 ```
 
 ##Comparing and evaluating assemblies 
