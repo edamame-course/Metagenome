@@ -21,14 +21,6 @@ Authored by Jin Choi for EDAMAME2016
 
 ## Tutorial
 
-### Setting up operating system
-```
-apt-get update
-apt-get -y install screen git curl gcc make g++ python-dev unzip \
-        default-jre pkg-config libncurses5-dev r-base-core \
-        r-cran-gplots python-matplotlib sysstat
-```
-
 ## Install mapping software for this tutorial, Bowtie2 and SamTools.  BT2_HOME is the default name where Bowtie2 is installed.
 Bowtie2 is a read mapping software.
 
