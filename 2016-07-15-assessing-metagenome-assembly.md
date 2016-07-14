@@ -75,25 +75,27 @@ You should see:
 All statistics are based on contigs of size >= 500 bp, unless otherwise noted (e.g., "# contigs (>= 0 bp)" and "Total length (>= 0 bp)" include all contigs).
 
 Assembly                   pe.final.contigs
-# contigs (>= 0 bp)        2982            
-# contigs (>= 1000 bp)     1295            
-Total length (>= 0 bp)     12952450        
-Total length (>= 1000 bp)  12137548        
-# contigs                  1855            
-Largest contig             215667          
-Total length               12533749        
-GC (%)                     39.42           
-N50                        17908           
-N75                        7410            
-L50                        151             
-L75                        427             
-# N's per 100 kbp          0.00 
+# contigs (>= 0 bp)        2707            
+# contigs (>= 1000 bp)     1064            
+Total length (>= 0 bp)     12946382        
+Total length (>= 1000 bp)  12168690        
+# contigs                  1581            
+Largest contig             232526          
+Total length               12532010        
+GC (%)                     39.45           
+N50                        30749           
+N75                        10062           
+L50                        95              
+L75                        275             
+# N's per 100 kbp          0.00   
 ```
 
 ##Comparing and evaluating assemblies 
 Let's compare three assembly. The result from last tutorial, which used only paired end `pe.final.contigs.fa`, include single end `pe.se.final.contigs.fa`and assembly from raw read `raw.final.contigs.fa`. Those assebmly is done from full data (instead of substituted data). Note, When you compare assembly, all assembly sould be done from same dataset other than that, it dose not make sense. 
 ```
-~/quast-3.0/quast.py pe.final.contigs.fa pe.se.final.contigs.fa raw.final.contigs.fa -o report_compare
+~/quast-3.0/quast.py pe.final.contigs.fa se.final.contigs.fa pe.se.final.contigs.fa -o report_compare
+
+raw.final.contigs.fa -o report_compare
 ```
 then, open the result:
 ```
@@ -103,40 +105,39 @@ You will see.
 ```
 All statistics are based on contigs of size >= 500 bp, unless otherwise noted (e.g., "# contigs (>= 0 bp)" and "Total length (>= 0 bp)" include all contigs).
 
-Assembly                   pe.final.contigs  pe.se.final.contigs  raw.final.contigs
-# contigs (>= 0 bp)        2982              3284                 2976             
-# contigs (>= 1000 bp)     1295              1447                 1149             
-Total length (>= 0 bp)     12952450          12744624             13050315         
-Total length (>= 1000 bp)  12137548          11835839             12189601         
-# contigs                  1855              2127                 1719             
-Largest contig             215667            157021               232493           
-Total length               12533749          12313947             12590769         
-GC (%)                     39.42             39.56                39.47            
-N50                        17908             17634                22360            
-N75                        7410              6220                 8751             
-L50                        151               150                  132              
-L75                        427               453                  357              
-# N's per 100 kbp          0.00              0.00                 0.00
-
+Assembly                   pe.final.contigs  se.final.contigs  pe.se.final.contigs
+# contigs (>= 0 bp)        2707              3162              2670               
+# contigs (>= 1000 bp)     1064              1375              1021               
+Total length (>= 0 bp)     12946382          12735336          12958914           
+Total length (>= 1000 bp)  12168690          11849449          12177316           
+# contigs                  1581              2038              1537               
+Largest contig             232526            232458            282362             
+Total length               12532010          12316301          12541412           
+GC (%)                     39.45             39.56             39.44              
+N50                        30749             22507             32048              
+N75                        10062             6464              10401              
+L50                        95                113               86                 
+L75                        275               392               258                
+# N's per 100 kbp          0.00              0.00              0.00 
 ```
-This is the statistics using EDAMAME pipeline
+Let's compare asssembly using RAW read.
 ```
 All statistics are based on contigs of size >= 500 bp, unless otherwise noted (e.g., "# contigs (>= 0 bp)" and "Total length (>= 0 bp)" include all contigs).
 
-Assembly                   final.contigs
-# contigs (>= 0 bp)        2736         
-# contigs (>= 1000 bp)     1055         
-Total length (>= 0 bp)     12995608     
-Total length (>= 1000 bp)  12194353     
-# contigs                  1589         
-Largest contig             213777       
-Total length               12570544     
-GC (%)                     39.43        
-N50                        30216        
-N75                        10230        
-L50                        102          
-L75                        285          
-# N's per 100 kbp          0.00  
+Assembly                   raw.final.contigs
+# contigs (>= 0 bp)        2976             
+# contigs (>= 1000 bp)     1149             
+Total length (>= 0 bp)     13050315         
+Total length (>= 1000 bp)  12189601         
+# contigs                  1719             
+Largest contig             232493           
+Total length               12590769         
+GC (%)                     39.47            
+N50                        22360            
+N75                        8751             
+L50                        132              
+L75                        357              
+# N's per 100 kbp          0.00 
 ```
 
 Another way to evaluate an assembly is using read orientation.  Paired end sequencing are two reads that we prepare to be a specific distance apart and in opposite directions.  We can look at mapped paired end reads to a reference genome or an assembled metagenome to assess "paired end concordance."  But first, you need to know how to map reads...
