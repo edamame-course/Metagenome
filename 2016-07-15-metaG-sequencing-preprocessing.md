@@ -131,7 +131,12 @@ L - Illumina 1.8+ Phred+33,  raw reads typically (0, 41)
 For a sanity check, let's use the ```fastx_quality_stats``` script again to see what changed in our trimmed data files:
 
 What are the differences between the raw data and the quality trimmed data?
-
+```
+gunzip SRR492065_?.sub.fastq.gz
+cat SRR492065_?.sub.fastq > SRR492065.before.quality.trim.fq
+fastx_quality_stats -i SRR492065.before.quality.trim.fq -o SRR492065.before.quality.trim.txt
+cat SRR492065.before.quality.trim.txt
+```
 
 ## Other tools for quality trimming
 
