@@ -87,6 +87,8 @@ L50                        86
 L75                        258                
 # N's per 100 kbp          0.00  
 ```
+N50 could be an important number. L50 (L75, LG50, LG75) is the number of contigs equal to or longer than N50 (N75, NG50, NG75)
+In other words, L50, for example, is the minimal number of contigs that cover half the assembly.
 
 ##Comparing and evaluating assemblies 
 Let's compare three assembly. The result from last tutorial, which used only paired end `pe.final.contigs.fa`, include single end `pe.se.final.contigs.fa`and assembly from raw read `raw.final.contigs.fa`. Those assebmly is done from full data (instead of substituted data). Note, When you compare assembly, all assembly sould be done from same dataset other than that, it dose not make sense. 
