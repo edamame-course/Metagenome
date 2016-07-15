@@ -98,7 +98,7 @@ This command:
 ```
 samtools view -c -f 4 SRR492065.sam.bam.sorted.bam
 ```
-`-c` Instead of printing the alignments, only count them and print the total number. All filter options, such as -f, -F, and -q, are taken into account. `-f INT` Only output alignments with all bits set in INT present in the FLAG field. INT can be specified in hex by beginning with `0x' (i.e. /^0x[0-9A-F]+/) or in octal by beginning with `0' (i.e. /^0[0-7]+/) [0]. 
+`-c` Instead of printing the alignments, only count them and print the total number. All filter options, such as -f, -F, and -q, are taken into account. `-f INT` Only output alignments with all bits set in INT present in the FLAG field. INT can be specified in hex by beginning with 0x (i.e. /^0x[0-9A-F]+/) or in octal by beginning with 0 (i.e. /^0[0-7]+/) [0]. 
 
 will count how many reads DID NOT align to the reference (77608).
 
@@ -107,7 +107,7 @@ This command:
 ```
 samtools view -c -F 4 SRR492065.sam.bam.sorted.bam
 ```
-`-F INT` Do not output alignments with any bits set in INT present in the FLAG field. INT can be specified in hex by beginning with `0x' (i.e. /^0x[0-9A-F]+/) or in octal by beginning with `0' (i.e. /^0[0-7]+/) [0].
+`-F INT` Do not output alignments with any bits set in INT present in the FLAG field. INT can be specified in hex by beginning with 0x (i.e. /^0x[0-9A-F]+/) or in octal by beginning with 0 (i.e. /^0[0-7]+/) [0].
 
 will count how many reads DID align to the reference (122392).
 
