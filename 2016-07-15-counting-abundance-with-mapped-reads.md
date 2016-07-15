@@ -26,7 +26,7 @@ Bowtie2 is a read mapping software.
 
 ```
 cd 
-wget wget http://sourceforge.net/projects/bowtie-bio/files/bowtie2/2.2.9/bowtie2-2.2.9-linux-x86_64.zip
+wget http://sourceforge.net/projects/bowtie-bio/files/bowtie2/2.2.9/bowtie2-2.2.9-linux-x86_64.zip
 unzip bowtie2-2.2.9-linux-x86_64.zip
 mv bowtie2-2.2.9 BT2_HOME
 ```
