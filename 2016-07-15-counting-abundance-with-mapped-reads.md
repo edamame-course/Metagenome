@@ -44,15 +44,20 @@ Install SamTools.  SamTools is a software that we use to work with files that ar
 sudo apt-get -y install samtools
 ```
 
+Download data
+```
+cd ~/metagenome
+wget https://s3.amazonaws.com/edamame/infant_gut.sub.tar.gz
+tar -zxvf infant_gut.sub.tar.gz
+```
+
 
 ## Do the mapping
 Now let’s map all of the reads to the reference. Start by indexing the reference genome.  Indexing a reference stores in a memory efficient way on your computer:
 
 ```
 cd ~/metagenome
-
 bowtie2-build megahit_out/final.contigs.fa reference
-
 ```
 Now, do the mapping of the raw reads to the reference genome (the -1 and -2 indicate the paired-end reads):
 ```
