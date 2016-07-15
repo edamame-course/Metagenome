@@ -44,7 +44,7 @@ Install dependencies (required software)
 sudo apt-get update
 sudo apt-get -y install python-dev python-pip fastx-toolkit unzip git zlib1g-dev default-jre
 ```
-Another dependencies
+Install khmer
 ```
 sudo easy_install -U setuptools
 sudo pip install screed
