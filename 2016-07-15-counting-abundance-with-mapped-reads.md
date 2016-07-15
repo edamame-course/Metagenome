@@ -69,7 +69,7 @@ Next, index the reference genome with samtools.  Another indexing step for memor
 samtools faidx megahit_out/final.contigs.fa
 ```
 
-Convert the SAM into a BAM file:
+Convert the SAM into a BAM file ([What is the SAM/BAM?](https://samtools.github.io/hts-specs/SAMv1.pdf):
 
 To reduce the size of a SAM file, you can convert it to a BAM file (SAM to BAM!) - put simply, this compresses your giant SAM file.
 
