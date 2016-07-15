@@ -119,7 +119,11 @@ gunzip -c SRR492065_1.sub.fastq.gz | wc
 
 will tell you how many lines there are in the FASTQ file (100,000). Reminder: there are four lines for each sequence.
 
-## Make a summary of the counts
+This number give you idea how many sequences are mapped (%)
+
+You can find this information in `.out` file also. 
+
+## Make a summary of the counts 
 
 ```
 for x in *.sorted.bam
