@@ -49,7 +49,7 @@ tar xvf quast-3.0.tar.gz
 ```
 
 ## Getting the data
-Now, let’s create a working directory:
+Now, let’s create a working directory and download assembled file. We are going to run assessment assembled with full data not subsampled.:
 ```
 cd ~/metagenome
 mkdir assessment
