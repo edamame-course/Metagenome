@@ -26,7 +26,7 @@ Some sequencing centers will remove library adapters (our sequencing center does
 
 As always, you want to make sure you read the manual of any tool to be sure you know what the tool is doing to your data and if that is the right tool for the job.  Knowing which tool to use is very important -- you wouldn't use a saw to put a nail in a piece of wood, would you?
 
-We'll be using a tool which is aware of paired-end reads but cannot treat paired-end and single-end together (megahit).
+We'll be using a tool which is aware of paired-end reads and single-end together (megahit).
 
 
 ## Quality Trimming Your Sequence Data
