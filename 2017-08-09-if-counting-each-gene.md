@@ -1,8 +1,9 @@
-#Estimating abundances in metagenomes
+# Estimating abundances in metagenomes
 
-Authored by Jin Choi for EDAMAME2016 
+Authored by Jin Choi for EDAMAME2017
 
 ## Summary
+If you want to count for each gene, you can use HTSeq
 
 ### Overarching Goal
 * This tutorial will contribute towards an understanding of quantitative analyses of **metagenome data**
