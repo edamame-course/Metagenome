@@ -1,17 +1,17 @@
 
 
-#Metagenome quality trimming
-Authored by Jin Choi for EDAMAME2016 (with contributions from Josh Herr from EDAMAME2015)  
-[EDAMAME-2016 wiki](https://github.com/edamame-course/2016-tutorials/wiki)
+# Metagenome quality trimming
+Authored by Jin Choi for EDAMAME2016 
+(with contributions from Josh Herr from EDAMAME2015)  
 
 ***
 EDAMAME tutorials have a CC-BY [license](https://github.com/edamame-course/2015-tutorials/blob/master/LICENSE.md). _Share, adapt, and attribute please!_
 ***
 
-##Overarching Goal
+## Overarching Goal
 * This tutorial will contribute towards an understanding of **microbial metagenome analysis**
 
-##Learning Objectives
+## Learning Objectives
 * Assess the quality of "raw" metagenome data
 * Trim raw reads to meet quality standards
 
