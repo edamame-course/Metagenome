@@ -1,9 +1,7 @@
 
 ## Digital Normalization and Metagenomic Assembly
 
-Authored by Jin Choi, Jackson Sorenson, and Joshua Herr for EDAMAME2016     
-
-[EDAMAME-2016 wiki](https://github.com/edamame-course/2016-tutorials/wiki)
+Authored by Jin Choi, Jackson Sorenson, and Joshua Herr for EDAMAME
 
 ***
 EDAMAME tutorials have a CC-BY [license](https://github.com/edamame-course/2015-tutorials/blob/master/LICENSE.md). _Share, adapt, and attribute please!_
