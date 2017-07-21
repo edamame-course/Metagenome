@@ -1,6 +1,6 @@
 # Evaluating or Assessing an Assembly 
 
-Authored by Jin Choi for EDAMAME2016 
+Authored by Jin Choi for EDAMAME 
 
 ## Summary
 
