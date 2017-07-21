@@ -1,5 +1,5 @@
 
-##Digital Normalization and Metagenomic Assembly
+## Digital Normalization and Metagenomic Assembly
 
 Authored by Jin Choi, Jackson Sorenson, and Joshua Herr for EDAMAME2016     
 
@@ -9,11 +9,11 @@ Authored by Jin Choi, Jackson Sorenson, and Joshua Herr for EDAMAME2016
 EDAMAME tutorials have a CC-BY [license](https://github.com/edamame-course/2015-tutorials/blob/master/LICENSE.md). _Share, adapt, and attribute please!_
 ***
 
-##Overarching Goal  
+## Overarching Goal  
 * This tutorial will contribute towards an understanding of **metagenome analysis**
 * It focuses on metagenomic assembly
 
-##Learning Objectives
+## Learning Objectives
 * Use digital normalization to remove redundant data
 * Trim/Filter out errors from sequences by identifying low coverage kmers in high coverage areas
 * Understand the limitations and strengths of metagenome assembly
