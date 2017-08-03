@@ -32,7 +32,7 @@ Let's take a look at the `log` file first; go ahead and type `tail log`.  This w
 We're interested in this part:
 
 ```
-[STAT] 3759 contigs, total 2935387 bp, min 206 bp, max 35461 bp, avg 781 bp, N50 885 bp
+[STAT] 3669 contigs, total 2977628 bp, min 211 bp, max 37382 bp, avg 812 bp, N50 942 bp
 ```
 
 Megahit actually runs numerous iterations of assemblies. Here we are looking at the last iteration and the number of contigs and total length of that iteration of the assembly. Later, we will be using QUAST to calculate all of our assembly stats.  There may be some odd terminology in some of the log file, [see this wiki for more information on terminology arising from the Celera Assembler](http://wgs-assembler.sourceforge.net/wiki/index.php/Celera_Assembler_Terminology) (the first assembly program designed for the Human Genome Project)
