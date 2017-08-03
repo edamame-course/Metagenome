@@ -149,12 +149,13 @@ And there you are - you've created an abundance table.  Like an OTU count table,
 
 ### get gene calling
 ```
-curl -o mgm4753635.3.350.genecalling.coding.faa -X GET "http://api.metagenomics.anl.gov/1/download/mgm4753635.3?file=350.1”
+curl -o mgm4758124.3.350.genecalling.coding.faa -X GET "http://api.metagenomics.anl.gov/1/download/mgm4758124.3?file=350.1"
 ```
 
 ### make gtf
 ```
-python dev/assembly_downstream/350_to_gtf.py mgm4753635.3.350.genecalling.coding.faa > assmbly.gtf
+git clone https://github.com/metajinomics/mapping_tools.git
+python mapping_tools/350_to_gtf.py mgm4753635.3.350.genecalling.coding.faa > assmbly.gtf
 ```
 
 ### count using HTSeq
@@ -164,7 +165,7 @@ for x in *.sorted.bam;do htseq-count -i gene_id -f bam $x assmbly.gtf > $x.htseq
 
 ### merge
 ```
-python dev/assembly_downstream/htseq_count_table.py *.count > final.table
+python mapping_tools/htseq_count_table.py *.count > final.table
 ```
 
 ### download annotation
