@@ -70,32 +70,16 @@ tar -zxvf infant_gut.sub.tar.gz
 ```
 This dataset contains paired end reads.  The paired end nature of datasets can be a huge advantage for assembly -- we know the approximate insert size between these reads.  However, when we trim bad quality sequences and/or reads, sometimes a previously paired read is left as an orphan (sad face).  However, for downstream analyses, we want to keep paired end reads that are together and separate these from single ended reads.  This is a bit of a process but important to understand.    
 
-First, let's trim the sequencing adapters from our reads (these are artificial non-biological sequences and we want them out) and then we'll place all the paired end reads into one combined file. 
+What's the quality of the dataset?
 
-```
-java -jar /usr/local/bin/trimmomatic-0.36.jar PE SRR492065_1.sub.fastq.gz SRR492065_2.sub.fastq.gz s1_pe s1_se s2_pe s2_se ILLUMINACLIP:/usr/local/share/adapters/TruSeq3-PE-2.fa:2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36
-interleave-reads.py s?_pe > SRR492065.combined.fq
-cat s1_se s2_se > SRR492065.single.fq
-```
-
-Do this again for the second metagenome.
-
-```
-java -jar /usr/local/bin/trimmomatic-0.36.jar PE SRR492066_1.sub.fastq.gz SRR492066_2.sub.fastq.gz s1_pe s1_se s2_pe s2_se ILLUMINACLIP:/usr/local/share/adapters/TruSeq3-PE-2.fa:2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36
-interleave-reads.py s?_pe > SRR492066.combined.fq
-cat s1_se s2_se > SRR492066.single.fq
-```
-
-Here's the breakdown of these commands:
-java: run java program, -jar: run jar program, /usr/local/bin/trimmomatic-0.36.jar: name of the program with path, PE: paired-end, SRR492066_1.sub.fastq.gz: first pared-end, SRR492066_2.sub.fastq.gz: second paired-end, s1_pe: output of first file(paired-end), s1_se: output of first file(single-end), s2_pe: output of second file(paired-end), s2_se: output of second file(single-end), ILLUMINACLIP: use illumina clip, /usr/local/share/adapters/TruSeq2-PE.fa: adapter file with path, 2:30:10 : <seed mismatches(specifies the maximum mismatch count which will still allow a full match to be performed)>:<palindrome clip threshold(specifies how accurate the match between the two 'adapter ligated' reads must be for PE palindrome read alignment.)>:<simple clip threshold(specifies how accurate the match between any adapter etc. sequence must be against a read.)> [Here more detail](http://www.usadellab.org/cms/?page=trimmomatic)
-
-What's the quality of the resulting dataset?
 
 1.  First, let's get an idea of some quality stats from our data.  We're going to first use the ```fastx_quality_stats``` [script](http://hannonlab.cshl.edu/fastx_toolkit/commandline.html#fastq_statistics_usage) from the Hannon Lab's [fastx-toolkit](http://hannonlab.cshl.edu/fastx_toolkit/index.html) package.
 
 ```
-fastx_quality_stats -i SRR492065.combined.fq -o SRR492065.quality.txt
-cat SRR492065.quality.txt
+gunzip -c SRR492065_1.sub.fastq.gz > SRR492065_1.unzip_for_quality.fastq
+head SRR492065_1.unzip_for_quality.fastq
+fastx_quality_stats -i SRR492065_1.unzip_for_quality.fastq -o SRR492065_1.sub.quality.txt
+cat SRR492065_1.sub.quality.txt
 ```
 
 The innerworkings:  -i: input file, -o: output file
@@ -137,6 +121,34 @@ cat SRR492065_?.sub.fastq > SRR492065.before.quality.trim.fq
 fastx_quality_stats -i SRR492065.before.quality.trim.fq -o SRR492065.before.quality.trim.txt
 cat SRR492065.before.quality.trim.txt
 ```
+
+First, let's trim the sequencing adapters from our reads (these are artificial non-biological sequences and we want them out) and then we'll place all the paired end reads into one combined file. 
+
+```
+java -jar /usr/local/bin/trimmomatic-0.36.jar PE SRR492065_1.sub.fastq.gz SRR492065_2.sub.fastq.gz s1_pe s1_se s2_pe s2_se ILLUMINACLIP:/usr/local/share/adapters/TruSeq3-PE-2.fa:2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36
+interleave-reads.py s?_pe > SRR492065.combined.fq
+cat s1_se s2_se > SRR492065.single.fq
+```
+
+Do this again for the second metagenome.
+
+```
+java -jar /usr/local/bin/trimmomatic-0.36.jar PE SRR492066_1.sub.fastq.gz SRR492066_2.sub.fastq.gz s1_pe s1_se s2_pe s2_se ILLUMINACLIP:/usr/local/share/adapters/TruSeq3-PE-2.fa:2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36
+interleave-reads.py s?_pe > SRR492066.combined.fq
+cat s1_se s2_se > SRR492066.single.fq
+```
+
+Here's the breakdown of these commands:
+java: run java program, -jar: run jar program, /usr/local/bin/trimmomatic-0.36.jar: name of the program with path, PE: paired-end, SRR492066_1.sub.fastq.gz: first pared-end, SRR492066_2.sub.fastq.gz: second paired-end, s1_pe: output of first file(paired-end), s1_se: output of first file(single-end), s2_pe: output of second file(paired-end), s2_se: output of second file(single-end), ILLUMINACLIP: use illumina clip, /usr/local/share/adapters/TruSeq2-PE.fa: adapter file with path, 2:30:10 : <seed mismatches(specifies the maximum mismatch count which will still allow a full match to be performed)>:<palindrome clip threshold(specifies how accurate the match between the two 'adapter ligated' reads must be for PE palindrome read alignment.)>:<simple clip threshold(specifies how accurate the match between any adapter etc. sequence must be against a read.)> [Here more detail](http://www.usadellab.org/cms/?page=trimmomatic)
+
+What's the quality of the resulting dataset?
+
+
+```
+fastx_quality_stats -i SRR492065.r1.pe -o after_trim.quality.txt
+cat after_trim.quality.txt
+```
+
 
 ## Other tools for quality trimming
 
