@@ -54,9 +54,9 @@ You'll want to read the (minimal) manual first, but we're going to use a couple 
 Taking that into consideration, we're going to run this code:
 ```
 cd ~/metagenome
-~/megahit/megahit -1 all_trim.r1.fastq -2 all_trim.r2.fastq -r all_trim.single.fastq -o trim_assembly
+~/megahit/megahit -1 all_trim.r1.fastq -2 all_trim.r2.fastq -r all_trim.single.fastq
 ```
---1: forward read, --2: reverse read of paired end, --o output folder, [more option](https://github.com/voutcn/megahit)
+--1: forward read, --2: reverse read of paired end, [more option](https://github.com/voutcn/megahit)
 You should slowly see something similar to the following output:
 
 ...and this is going to run for a while (perhaps until a k of 91 or greater) and eventually at the end you'll see something like this:
