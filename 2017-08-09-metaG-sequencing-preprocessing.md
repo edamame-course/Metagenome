@@ -78,8 +78,6 @@ What's the quality of the dataset?
 ```
 gunzip -c SRR492065_1.sub.fastq.gz > SRR492065_1.unzip_for_quality.fastq
 head SRR492065_1.unzip_for_quality.fastq
-fastx_quality_stats -i SRR492065_1.unzip_for_quality.fastq -o SRR492065_1.sub.quality.txt
-cat SRR492065_1.sub.quality.txt
 ```
 
 The innerworkings:  -i: input file, -o: output file
@@ -116,10 +114,8 @@ For a sanity check, let's use the ```fastx_quality_stats``` script again to see 
 
 What are the differences between the raw data and the quality trimmed data?
 ```
-gunzip SRR492065_?.sub.fastq.gz
-cat SRR492065_?.sub.fastq > SRR492065.before.quality.trim.fq
-fastx_quality_stats -i SRR492065.before.quality.trim.fq -o SRR492065.before.quality.trim.txt
-cat SRR492065.before.quality.trim.txt
+fastx_quality_stats -i SRR492065_1.unzip_for_quality.fastq -o before_trim.quality.txt
+cat before_trim.quality.txt
 ```
 
 First, let's trim the sequencing adapters from our reads (these are artificial non-biological sequences and we want them out) and then we'll place all the paired end reads into one combined file. 
