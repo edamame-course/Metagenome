@@ -1,6 +1,6 @@
-#Estimating abundances in metagenomes
+# Estimating abundances in metagenomes
 
-Authored by Jin Choi for EDAMAME2016 
+Authored by Jin Choi for EDAMAME
 
 ## Summary
 
