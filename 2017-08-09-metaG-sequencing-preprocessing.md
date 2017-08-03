@@ -44,20 +44,12 @@ Install dependencies (required software)
 sudo apt-get update
 sudo apt-get -y install python-dev python-pip fastx-toolkit unzip git zlib1g-dev default-jre
 ```
-Install khmer
-```
-sudo easy_install -U setuptools
-sudo pip install screed
-sudo pip install khmer
-```
+
 Install Trimmomatic - a program to quality trim reads
 ```
 cd 
 curl -O http://www.usadellab.org/cms/uploads/supplementary/Trimmomatic/Trimmomatic-0.36.zip
 unzip Trimmomatic-0.36.zip
-cd Trimmomatic-0.36/
-sudo cp trimmomatic-0.36.jar /usr/local/bin
-sudo cp adapters/* /usr/local/share/adapters
 ```
 
 Download the data: The tutorial data is from [Sharon et al. 2013](http://www.ncbi.nlm.nih.gov/pubmed/22936250); it’s two data points from an infant gut sample. And it is a subsampled file so that we can do this tutorial in some reasonable amount of time, 100,000 sequences. Go to the home directory, make a directory named `metagenome`, change directores into the folder, download data, then unzip the data or decompress the data file. 
@@ -135,27 +127,27 @@ The innerworkings:  -i: input file, -o: output file
 First, let's trim the sequencing adapters from our reads (these are artificial non-biological sequences and we want them out) and then we'll place all the paired end reads into one combined file. 
 
 ```
-java -jar /usr/local/bin/trimmomatic-0.36.jar PE SRR492065_1.sub.fastq.gz SRR492065_2.sub.fastq.gz s1_pe s1_se s2_pe s2_se ILLUMINACLIP:/usr/local/share/adapters/TruSeq3-PE-2.fa:2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36
-interleave-reads.py s?_pe > SRR492065.combined.fq
-cat s1_se s2_se > SRR492065.single.fq
+for x in SRR*_1.sub.fastq.gz;do java -jar ~/Trimmomatic-0.36/trimmomatic-0.36.jar PE $x ${x%_1*}_2.sub.fastq.gz ${x%_1*}.r1.pe ${x%_1*}.r1.se ${x%_1*}.r2.pe ${x%_1*}.r2.se ILLUMINACLIP:../Trimmomatic-0.36/adapters/TruSeq3-PE-2.fa:2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36;done 
 ```
 
-Do this again for the second metagenome.
 
-```
-java -jar /usr/local/bin/trimmomatic-0.36.jar PE SRR492066_1.sub.fastq.gz SRR492066_2.sub.fastq.gz s1_pe s1_se s2_pe s2_se ILLUMINACLIP:/usr/local/share/adapters/TruSeq3-PE-2.fa:2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36
-interleave-reads.py s?_pe > SRR492066.combined.fq
-cat s1_se s2_se > SRR492066.single.fq
-```
 
 Here's the breakdown of these commands:
 java: run java program, -jar: run jar program, /usr/local/bin/trimmomatic-0.36.jar: name of the program with path, PE: paired-end, SRR492066_1.sub.fastq.gz: first pared-end, SRR492066_2.sub.fastq.gz: second paired-end, s1_pe: output of first file(paired-end), s1_se: output of first file(single-end), s2_pe: output of second file(paired-end), s2_se: output of second file(single-end), ILLUMINACLIP: use illumina clip, /usr/local/share/adapters/TruSeq2-PE.fa: adapter file with path, 2:30:10 : <seed mismatches(specifies the maximum mismatch count which will still allow a full match to be performed)>:<palindrome clip threshold(specifies how accurate the match between the two 'adapter ligated' reads must be for PE palindrome read alignment.)>:<simple clip threshold(specifies how accurate the match between any adapter etc. sequence must be against a read.)> [Here more detail](http://www.usadellab.org/cms/?page=trimmomatic)
+
+Then, combine
+```
+cat *.r1.pe > all.r1.fastq
+cat *.r2.pe > all.r2.fastq
+cat *.se > all.single.fastq
+```
+
 
 What's the quality of the resulting dataset?
 
 
 ```
-fastx_quality_stats -i SRR492065.r1.pe -o after_trim.quality.txt
+fastx_quality_stats -i all.r1.fastq -o after_trim.quality.txt
 cat after_trim.quality.txt
 ```
 
