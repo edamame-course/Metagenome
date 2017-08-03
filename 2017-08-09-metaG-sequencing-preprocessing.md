@@ -80,7 +80,19 @@ gunzip -c SRR492065_1.sub.fastq.gz > SRR492065_1.unzip_for_quality.fastq
 head SRR492065_1.unzip_for_quality.fastq
 ```
 
-The innerworkings:  -i: input file, -o: output file
+It looks like 
+```
+@SRR492065.1 HWI-EAS385_0095_FC:2:1:6702:1434/1
+TCAGCCATCGCTATGCTTGGCTTCACTGTGAAGACCACTCCAATCGCGACTTGTCACGATTGTCGTTACCATTAAANNNNNGAAAACAGGAGAACAAGTA
++
+IIIIIIHIIFIIIIIIIIHIIGIIIIIIEIIIGIIIIIDGGDEEFHIIEIEHEHGEHE>EEBDFEEEECF8AA??4#####5789:/1,8B?@B<@B###
+@SRR492065.2 HWI-EAS385_0095_FC:2:1:6931:1435/1
+GCAATAGCAGGCTCACCGACTGTGATTTTACTAGAATTTCCAAACTCAGCGACTTGATCAACTTTGTCGGAAGAAANNNNNATCACGGCTAAATCCGTAT
++
+DHHFBHDDBBGHFHHHHGHHHHHHHHHHHHHHHEHHHHHHHHHHHHHHHHHBHHGHFHH>HHHHH@HFEGCHDEH1#####=;;;??3=9B8BB=CEB@C
+@SRR492065.3 HWI-EAS385_0095_FC:2:1:9984:1431/1
+AAGCTCATTTTTATCATAAGCTACAAAGAACGGATAGTAAATCAAGATGGCCACTAGAATTAAAACAATATTCAAANNNNNAGCACGCCAATCGCCGCCT
+```
 
 This will give us some idea of what we are dealing with.  We'll want to keep this in mind when we check the quality after trimming.
 
@@ -117,6 +129,8 @@ What are the differences between the raw data and the quality trimmed data?
 fastx_quality_stats -i SRR492065_1.unzip_for_quality.fastq -o before_trim.quality.txt
 cat before_trim.quality.txt
 ```
+
+The innerworkings:  -i: input file, -o: output file
 
 First, let's trim the sequencing adapters from our reads (these are artificial non-biological sequences and we want them out) and then we'll place all the paired end reads into one combined file. 
 
