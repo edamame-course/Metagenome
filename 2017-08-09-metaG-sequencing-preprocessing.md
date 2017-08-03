@@ -127,7 +127,7 @@ The innerworkings:  -i: input file, -o: output file
 First, let's trim the sequencing adapters from our reads (these are artificial non-biological sequences and we want them out) and then we'll place all the paired end reads into one combined file. 
 
 ```
-for x in SRR*_1.sub.fastq.gz;do java -jar ~/Trimmomatic-0.36/trimmomatic-0.36.jar PE $x ${x%_1*}_2.sub.fastq.gz ${x%_1*}.r1.pe ${x%_1*}.r1.se ${x%_1*}.r2.pe ${x%_1*}.r2.se ILLUMINACLIP:../Trimmomatic-0.36/adapters/TruSeq3-PE-2.fa:2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36;done 
+for x in SRR*_1.sub.fastq.gz;do java -jar ../Trimmomatic-0.36/trimmomatic-0.36.jar PE $x ${x%_1*}_2.sub.fastq.gz ${x%_1*}.r1.pe ${x%_1*}.r1.se ${x%_1*}.r2.pe ${x%_1*}.r2.se ILLUMINACLIP:../Trimmomatic-0.36/adapters/TruSeq3-PE-2.fa:2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36;done 
 ```
 
 
@@ -137,9 +137,9 @@ java: run java program, -jar: run jar program, /usr/local/bin/trimmomatic-0.36.j
 
 Then, combine
 ```
-cat *.r1.pe > all.r1.fastq
-cat *.r2.pe > all.r2.fastq
-cat *.se > all.single.fastq
+cat *.r1.pe > all_trim.r1.fastq
+cat *.r2.pe > all_trim.r2.fastq
+cat *.se > all_trim.single.fastq
 ```
 
 
@@ -147,7 +147,7 @@ What's the quality of the resulting dataset?
 
 
 ```
-fastx_quality_stats -i all.r1.fastq -o after_trim.quality.txt
+fastx_quality_stats -i all_trim.r1.fastq -o after_trim.quality.txt
 cat after_trim.quality.txt
 ```
 
