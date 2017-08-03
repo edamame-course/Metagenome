@@ -44,8 +44,8 @@ Quast is a program that will calculate some statistics about our metagenome asse
 #### Install Quast
 ```
 cd
-curl -L http://sourceforge.net/projects/quast/files/quast-3.0.tar.gz/download > quast-3.0.tar.gz
-tar xvf quast-3.0.tar.gz
+curl -L https://sourceforge.net/projects/quast/files/quast-4.5.tar.gz/download > quast-4.5.tar.gz
+tar xvf quast-4.5.tar.gz
 ```
 
 ## Getting the data
@@ -62,7 +62,7 @@ Now we can take a look at our assembly using QUAST. **From the ~/metagenomics/as
 ##Looking at the assembly
 Run QUAST:
 ```
-~/quast-3.0/quast.py pe.se.final.contigs.fa -o report
+~/quast-4.5/quast.py pe.se.final.contigs.fa -o report
 ```
 Once QUAST has finished running, change into the quast_output directory and use `ls` to take a look at all of the files it created. Use `less` to examine the `report.txt` file. 
 ```
@@ -72,20 +72,28 @@ You should see:
 ```
 All statistics are based on contigs of size >= 500 bp, unless otherwise noted (e.g., "# contigs (>= 0 bp)" and "Total length (>= 0 bp)" include all contigs).
 
-Assembly                   pe.se.final.contigs
-# contigs (>= 0 bp)        2670               
-# contigs (>= 1000 bp)     1021               
-Total length (>= 0 bp)     12958914           
-Total length (>= 1000 bp)  12177316           
-# contigs                  1537               
-Largest contig             282362             
-Total length               12541412           
-GC (%)                     39.44              
-N50                        32048              
-N75                        10401              
-L50                        86                 
-L75                        258                
-# N's per 100 kbp          0.00  
+Assembly                    pe.se.final.contigs
+# contigs (>= 0 bp)         2670               
+# contigs (>= 1000 bp)      1021               
+# contigs (>= 5000 bp)      455                
+# contigs (>= 10000 bp)     265                
+# contigs (>= 25000 bp)     117                
+# contigs (>= 50000 bp)     40                 
+Total length (>= 0 bp)      12958914           
+Total length (>= 1000 bp)   12177316           
+Total length (>= 5000 bp)   10827408           
+Total length (>= 10000 bp)  9482694            
+Total length (>= 25000 bp)  7172558            
+Total length (>= 50000 bp)  4430125            
+# contigs                   1537               
+Largest contig              282362             
+Total length                12541412           
+GC (%)                      39.44              
+N50                         32048              
+N75                         10401              
+L50                         86                 
+L75                         258                
+# N's per 100 kbp           0.00 
 ```
 N50 could be an important number. L50 (L75, LG50, LG75) is the number of contigs equal to or longer than N50 (N75, NG50, NG75)
 In other words, L50, for example, is the minimal number of contigs that cover half the assembly.
@@ -93,7 +101,7 @@ In other words, L50, for example, is the minimal number of contigs that cover ha
 ##Comparing and evaluating assemblies 
 Let's compare three assembly. The result from last tutorial, which used only paired end `pe.final.contigs.fa`, include single end `pe.se.final.contigs.fa`and assembly from raw read `raw.final.contigs.fa`. Those assebmly is done from full data (instead of substituted data). Note, When you compare assembly, all assembly sould be done from same dataset other than that, it dose not make sense. 
 ```
-~/quast-3.0/quast.py pe.final.contigs.fa se.final.contigs.fa pe.se.final.contigs.fa -o report_compare
+~/quast-4.5/quast.py pe.final.contigs.fa se.final.contigs.fa pe.se.final.contigs.fa -o report_compare
 ```
 then, open the result:
 ```
@@ -103,20 +111,28 @@ You will see.
 ```
 All statistics are based on contigs of size >= 500 bp, unless otherwise noted (e.g., "# contigs (>= 0 bp)" and "Total length (>= 0 bp)" include all contigs).
 
-Assembly                   pe.final.contigs  se.final.contigs  pe.se.final.contigs
-# contigs (>= 0 bp)        2707              3162              2670               
-# contigs (>= 1000 bp)     1064              1375              1021               
-Total length (>= 0 bp)     12946382          12735336          12958914           
-Total length (>= 1000 bp)  12168690          11849449          12177316           
-# contigs                  1581              2038              1537               
-Largest contig             232526            232458            282362             
-Total length               12532010          12316301          12541412           
-GC (%)                     39.45             39.56             39.44              
-N50                        30749             22507             32048              
-N75                        10062             6464              10401              
-L50                        95                113               86                 
-L75                        275               392               258                
-# N's per 100 kbp          0.00              0.00              0.00 
+Assembly                    pe.final.contigs  se.final.contigs  pe.se.final.contigs
+# contigs (>= 0 bp)         2707              3162              2670               
+# contigs (>= 1000 bp)      1064              1375              1021               
+# contigs (>= 5000 bp)      466               486               455                
+# contigs (>= 10000 bp)     276               246               265                
+# contigs (>= 25000 bp)     118               92                117                
+# contigs (>= 50000 bp)     42                37                40                 
+Total length (>= 0 bp)      12946382          12735336          12958914           
+Total length (>= 1000 bp)   12168690          11849449          12177316           
+Total length (>= 5000 bp)   10751027          9776456           10827408           
+Total length (>= 10000 bp)  9416243           8056968           9482694            
+Total length (>= 25000 bp)  6908964           5669988           7172558            
+Total length (>= 50000 bp)  4205980           3750850           4430125            
+# contigs                   1581              2038              1537               
+Largest contig              232526            232458            282362             
+Total length                12532010          12316301          12541412           
+GC (%)                      39.45             39.56             39.44              
+N50                         30749             22507             32048              
+N75                         10062             6464              10401              
+L50                         95                113               86                 
+L75                         275               392               258                
+# N's per 100 kbp           0.00              0.00              0.00  
 ```
 Let's compare asssembly using RAW read.
 ```
