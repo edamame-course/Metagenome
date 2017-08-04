@@ -72,7 +72,7 @@ This file contains all of the information about where each read hits our referen
 Next, index the reference genome with samtools.  Another indexing step for memory efficiency for a different tool.  In the mapping world, get used to indexing since the files are huge:
 
 ```
-samtools assembled.contigs.fa
+samtools faidx assembled.contigs.fa
 ```
 
 Convert the SAM into a BAM file ([What is the SAM/BAM?](https://samtools.github.io/hts-specs/SAMv1.pdf)):
