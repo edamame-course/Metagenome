@@ -81,7 +81,7 @@ This file contains all of the information about where each read hits our referen
 Next, index the reference genome with samtools.  Another indexing step for memory efficiency for a different tool.  In the mapping world, get used to indexing since the files are huge:
 
 ```
-samtools faidx assembled.contigs.fa
+~/samtools-1.5/samtools faidx assembled.contigs.fa
 ```
 
 Convert the SAM into a BAM file ([What is the SAM/BAM?](https://samtools.github.io/hts-specs/SAMv1.pdf)):
@@ -90,7 +90,7 @@ To reduce the size of a SAM file, you can convert it to a BAM file (SAM to BAM!)
 
 ```
 for x in *.sam;
-  do samtools import assembled.contigs.fa.fai $x $x.bam;
+  do ~/samtools-1.5/samtools import assembled.contigs.fa.fai $x $x.bam;
 done
 ```
 
@@ -98,21 +98,21 @@ Sort the BAM file - again this is a memory saving and sometimes required step, w
 ```
 mkdir tmp
 for x in *.bam;
-  do samtools sort -T ./tmp/$x.sorted -o $x.sorted.bam $x;
+  do ~/samtools-1.5/samtools sort -T ./tmp/$x.sorted -o $x.sorted.bam $x;
 done
 ```
 
 And index the sorted BAM file:
 ```
 for x in *.sorted.bam;
-  do samtools index $x;
+  do ~/samtools-1.5/samtools index $x;
 done
 ```
 
 ## Counting alignments
 This command:
 ```
-samtools view -c -f 4 SRR492065.sam.bam.sorted.bam
+~/samtools-1.5/samtools view -c -f 4 SRR492065.sam.bam.sorted.bam
 ```
 `-c` Instead of printing the alignments, only count them and print the total number. All filter options, such as -f, -F, and -q, are taken into account. `-f INT` Only output alignments with all bits set in INT present in the FLAG field. INT can be specified in hex by beginning with 0x (i.e. /^0x[0-9A-F]+/) or in octal by beginning with 0 (i.e. /^0[0-7]+/) [0]. 
 
@@ -121,7 +121,7 @@ will count how many reads DID NOT align to the reference (77608).
 This command:
 
 ```
-samtools view -c -F 4 SRR492065.sam.bam.sorted.bam
+~/samtools-1.5/samtools view -c -F 4 SRR492065.sam.bam.sorted.bam
 ```
 `-F INT` Do not output alignments with any bits set in INT present in the FLAG field. INT can be specified in hex by beginning with 0x (i.e. /^0x[0-9A-F]+/) or in octal by beginning with 0 (i.e. /^0[0-7]+/) [0].
 
@@ -143,7 +143,7 @@ You can find this information in `.out` file also.
 
 ```
 for x in *.sorted.bam
-do samtools idxstats $x > $x.idxstats.txt
+do ~/samtools-1.5/samtools idxstats $x > $x.idxstats.txt
 done
 ```
 We have some scripts that we use to process this file.
@@ -169,6 +169,15 @@ python mapping_tools/350_to_gtf.py mgm4753635.3.350.genecalling.coding.faa > ass
 ```
 
 ### count using HTSeq
+install requirements
+```
+sudo apt-get install build-essential python2.7-dev python-numpy python-matplotlib python-pysam python-htseq
+```
+install HTseq (This step takes time)
+```
+pip install HTSeq
+```
+running
 ```
 for x in *.sorted.bam;do htseq-count -i gene_id -f bam $x assmbly.gtf > $x.htseq.count;done
 ```
