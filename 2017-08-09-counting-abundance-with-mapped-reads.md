@@ -44,11 +44,12 @@ Install SamTools.  SamTools is a software that we use to work with files that ar
 sudo apt-get -y install samtools
 ```
 
-Download data
+Download assembled contigs.
+
+To make everyone use same assembled file, let us download same assembled file.
 ```
 cd ~/metagenome
-wget https://s3.amazonaws.com/edamame/infant_gut.sub.tar.gz
-tar -zxvf infant_gut.sub.tar.gz
+curl -o assembled.contigs.fa -X GET "http://api.metagenomics.anl.gov/1/download/mgm4753635.3?file=100.1"
 ```
 
 
@@ -57,7 +58,7 @@ Now let’s map all of the reads to the reference. Start by indexing the referen
 
 ```
 cd ~/metagenome
-bowtie2-build megahit_out/final.contigs.fa reference
+bowtie2-build assembled.contigs.fa reference
 ```
 Now, do the mapping of the raw reads to the reference genome (the -1 and -2 indicate the paired-end reads):
 ```
@@ -71,7 +72,7 @@ This file contains all of the information about where each read hits our referen
 Next, index the reference genome with samtools.  Another indexing step for memory efficiency for a different tool.  In the mapping world, get used to indexing since the files are huge:
 
 ```
-samtools faidx megahit_out/final.contigs.fa
+samtools assembled.contigs.fa
 ```
 
 Convert the SAM into a BAM file ([What is the SAM/BAM?](https://samtools.github.io/hts-specs/SAMv1.pdf)):
@@ -80,7 +81,7 @@ To reduce the size of a SAM file, you can convert it to a BAM file (SAM to BAM!)
 
 ```
 for x in *.sam;
-  do samtools import megahit_out/final.contigs.fa.fai $x $x.bam;
+  do samtools import assembled.contigs.fa.fai $x $x.bam;
 done
 ```
 
@@ -149,7 +150,7 @@ And there you are - you've created an abundance table.  Like an OTU count table,
 
 ### get gene calling
 ```
-curl -o mgm4758124.3.350.genecalling.coding.faa -X GET "http://api.metagenomics.anl.gov/1/download/mgm4758124.3?file=350.1"
+curl -o mgm4753635.3.350.genecalling.coding.faa -X GET "http://api.metagenomics.anl.gov/1/download/mgm4753635.3?file=350.1"
 ```
 
 ### make gtf
