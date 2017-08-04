@@ -41,7 +41,12 @@ export PATH
 Install SamTools.  SamTools is a software that we use to work with files that are outputted by Bowtie2.  It is a software that is often used with mapping tools.  Mapping files are generally very big and get unwieldy because of their size, SamTools helps us deal with these large files in a memory efficient approaches but sometimes it adds a lot of steps at a cost of speeding up analysis.
 
 ```
-sudo apt-get -y install samtools
+sudo apt-get install -y libncurses5-dev libbz2-dev liblzma-dev
+wget https://github.com/samtools/samtools/releases/download/1.5/samtools-1.5.tar.bz2
+tar xvjf samtools-1.5.tar.bz2
+cd samtools-1.5
+./configure
+make
 ```
 
 Download assembled contigs.
