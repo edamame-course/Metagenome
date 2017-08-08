@@ -149,8 +149,8 @@ done
 We have some scripts that we use to process this file.
 ```
 git clone https://github.com/metajinomics/mapping_tools.git
-python mapping_tools/get_count_table.py *.idxstats.txt > counts.txt
-less counts.txt
+python mapping_tools/get_count_table.py *.idxstats.txt > contig_counts.tsv
+less contig_counts.tsv
 ```
 
 And there you are - you've created an abundance table.  Like an OTU count table, you can now use this file for statistical analyses when you do the mapping for multiple samples.
@@ -184,7 +184,7 @@ for x in *.sorted.bam;do htseq-count -i gene_id -f bam $x assmbly.gtf > $x.htseq
 
 ### merge
 ```
-python mapping_tools/htseq_count_table.py *.count > final.table
+python mapping_tools/htseq_count_table.py *.count > gene_count.tsv
 ```
 
 ### download annotation
