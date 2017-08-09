@@ -52,7 +52,7 @@ curl -O http://www.usadellab.org/cms/uploads/supplementary/Trimmomatic/Trimmomat
 unzip Trimmomatic-0.36.zip
 ```
 
-Download the data: The tutorial data is from [Sharon et al. 2013](http://www.ncbi.nlm.nih.gov/pubmed/22936250); it’s two data points from an infant gut sample. And it is a subsampled file so that we can do this tutorial in some reasonable amount of time, 100,000 sequences. Go to the home directory, make a directory named `metagenome`, change directores into the folder, download data, then unzip the data or decompress the data file. 
+Download the data (You did on last session): The tutorial data is from [Sharon et al. 2013](http://www.ncbi.nlm.nih.gov/pubmed/22936250); it’s two data points from an infant gut sample. And it is a subsampled file so that we can do this tutorial in some reasonable amount of time, 100,000 sequences. Go to the home directory, make a directory named `metagenome`, change directores into the folder, download data, then unzip the data or decompress the data file. 
 ```
 cd
 mkdir metagenome
