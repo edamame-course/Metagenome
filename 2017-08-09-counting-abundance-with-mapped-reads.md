@@ -141,6 +141,8 @@ You can find this information in `.out` file also.
 
 ## Make a summary of the counts 
 
+### Option 1: count each contigs
+
 ```
 for x in *.sorted.bam
 do ~/samtools-1.5/samtools idxstats $x > $x.idxstats.txt
@@ -156,19 +158,19 @@ less contig_counts.tsv
 And there you are - you've created an abundance table.  Like an OTU count table, you can now use this file for statistical analyses when you do the mapping for multiple samples.
 
 
-
-### get gene calling
+### Option 2: count each genes
+#### get gene calling
 ```
 curl -o mgm4753635.3.350.genecalling.coding.faa -X GET "http://api.metagenomics.anl.gov/1/download/mgm4753635.3?file=350.1"
 ```
 
-### make gtf
+#### make gtf
 ```
 git clone https://github.com/metajinomics/mapping_tools.git
 python mapping_tools/350_to_gtf.py mgm4753635.3.350.genecalling.coding.faa > assmbly.gtf
 ```
 
-### count using HTSeq
+#### count using HTSeq
 install requirements
 ```
 sudo apt-get install build-essential python2.7-dev python-numpy python-matplotlib python-pysam python-htseq
@@ -182,7 +184,7 @@ running
 for x in *.sorted.bam;do htseq-count -i gene_id -f bam $x assmbly.gtf > $x.htseq.count;done
 ```
 
-### merge
+#### merge
 ```
 python mapping_tools/htseq_count_table.py *.count > gene_count.tsv
 ```
