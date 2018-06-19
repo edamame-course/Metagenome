@@ -48,8 +48,8 @@ sudo apt-get -y install python-dev python-pip fastx-toolkit unzip git zlib1g-dev
 Install Trimmomatic - a program to quality trim reads
 ```
 cd 
-curl -O http://www.usadellab.org/cms/uploads/supplementary/Trimmomatic/Trimmomatic-0.36.zip
-unzip Trimmomatic-0.36.zip
+curl -O http://www.usadellab.org/cms/uploads/supplementary/Trimmomatic/Trimmomatic-0.38.zip
+unzip Trimmomatic-0.38.zip
 ```
 
 Download the data (You did on last session): The tutorial data is from [Sharon et al. 2013](http://www.ncbi.nlm.nih.gov/pubmed/22936250); it’s two data points from an infant gut sample. And it is a subsampled file so that we can do this tutorial in some reasonable amount of time, 100,000 sequences. Go to the home directory, make a directory named `metagenome`, change directores into the folder, download data, then unzip the data or decompress the data file. 
@@ -128,7 +128,7 @@ First, let's trim the sequencing adapters from our reads (these are artificial n
 
 ```
 for x in SRR*_1.sub.fastq.gz;
-do java -jar ../Trimmomatic-0.36/trimmomatic-0.36.jar PE $x ${x%_1*}_2.sub.fastq.gz ${x%_1*}.r1.pe ${x%_1*}.r1.se ${x%_1*}.r2.pe ${x%_1*}.r2.se ILLUMINACLIP:../Trimmomatic-0.36/adapters/TruSeq3-PE-2.fa:2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36;
+do java -jar ../Trimmomatic-0.38/trimmomatic-0.38.jar PE $x ${x%_1*}_2.sub.fastq.gz ${x%_1*}.r1.pe ${x%_1*}.r1.se ${x%_1*}.r2.pe ${x%_1*}.r2.se ILLUMINACLIP:../Trimmomatic-0.38/adapters/TruSeq3-PE-2.fa:2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36;
 done 
 ```
 
