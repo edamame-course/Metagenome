@@ -33,7 +33,7 @@ We'll be using a tool which is aware of paired-end reads and single-end together
 
 The first step to starting an assembly or metagenomic read analysis is to remove bad quality sequences, a process we call quality trimming.  We'll start a cloud compute instance and practice trimming bad quality reads.
 
-1.  Start a ```m4.large``` machine from Amazon Web Services.  This instance has about 8 GB of RAM, and 2 CPUs, and should be enough to complete the assembly of the example data set we will use. However, this may NOT enough for your FULL-SIZE DATA. You may consider 125 GB of RAM, and 8 CPUs or bigger. [Here how to connect EC2](http://angus.readthedocs.io/en/2015/amazon/index.html)
+1.  Start a ```m4.large``` machine from Amazon Web Services.  This instance has about 8 GB of RAM, and 2 CPUs, and should be enough to complete the assembly of the example data set we will use. However, this may NOT enough for your FULL-SIZE DATA. You may consider 125 GB of RAM, and 8 CPUs or bigger. [Here how to connect EC2](http://ec2-tutorials.readthedocs.io/en/latest/index.html)
 
 **Note:** One of the issues with processing whole genome shotgun data is how long it takes for the computer to process many steps of the workflow.  This can be time consuming and you should consider using ```screen``` or ```tmux``` to ensure that an internet connection issue does not cause you to lose your workflow progress.
 
@@ -126,6 +126,21 @@ The innerworkings:  -i: input file, -o: output file
 
 First, let's trim the sequencing adapters from our reads (these are artificial non-biological sequences and we want them out) and then we'll place all the paired end reads into one combined file. 
 
+Let's talk about sequencing adapter little more before we run Trimmomatic. When we run Trimmomatic, we are going to tell software which adapter I want to trim. Then, how I know which adapter that I use? First, you can ask sequencing center which adapter they use. Second, if you are a good bioinformatitian, you can figure out yourself. Here is how, there are common adapter sequences are provided in the folder ~/Trimmomatic-0.38/adapters/. You can see six files (NexteraPE-PE.fa,TruSeq2-PE.fa,TruSeq2-SE.fa,TruSeq3-PE-2.fa,TruSeq3-PE.fa,TruSeq3-SE.fa). Then you can figure out which adapter is used by using follow command.
+
+```
+grep -f ~Trimmomatic-0.38/adapters/TruSeq3-PE.fa SRR492065_1.unzip_for_quality.fastq
+```
+This command above does not give you anything, which mean the sequences in the file was not used for adapter in your sample.
+```
+grep -f ~Trimmomatic-0.38/adapters/TruSeq3-PE-2.fa SRR492065_1.unzip_for_quality.fastq
+```
+This command above gives you many sequences, which mean this is the correct adapter sequences that you want to use. You can automate to check all six file with following commmand.
+```
+for x in ~/Trimmomatic-0.38/adapters/*;do echo $x;grep -f $x SRR492065_1.unzip_for_quality.fastq;done
+```
+
+Now, let's get trimmed.
 ```
 for x in SRR*_1.sub.fastq.gz;
 do java -jar ../Trimmomatic-0.38/trimmomatic-0.38.jar PE $x ${x%_1*}_2.sub.fastq.gz ${x%_1*}.r1.pe ${x%_1*}.r1.se ${x%_1*}.r2.pe ${x%_1*}.r2.se ILLUMINACLIP:../Trimmomatic-0.38/adapters/TruSeq3-PE-2.fa:2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36;
