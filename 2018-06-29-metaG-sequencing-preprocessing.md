@@ -129,11 +129,11 @@ First, let's trim the sequencing adapters from our reads (these are artificial n
 Let's talk about sequencing adapter little more before we run Trimmomatic. When we run Trimmomatic, we are going to tell software which adapter I want to trim. Then, how I know which adapter that I use? First, you can ask sequencing center which adapter they use. Second, if you are a good bioinformatitian, you can figure out yourself. Here is how, there are common adapter sequences are provided in the folder ~/Trimmomatic-0.38/adapters/. You can see six files (NexteraPE-PE.fa,TruSeq2-PE.fa,TruSeq2-SE.fa,TruSeq3-PE-2.fa,TruSeq3-PE.fa,TruSeq3-SE.fa). Then you can figure out which adapter is used by using follow command.
 
 ```
-grep -f ~Trimmomatic-0.38/adapters/TruSeq3-PE.fa SRR492065_1.unzip_for_quality.fastq
+grep -f ~/Trimmomatic-0.38/adapters/TruSeq3-PE.fa SRR492065_1.unzip_for_quality.fastq
 ```
 This command above does not give you anything, which mean the sequences in the file was not used for adapter in your sample.
 ```
-grep -f ~Trimmomatic-0.38/adapters/TruSeq3-PE-2.fa SRR492065_1.unzip_for_quality.fastq
+grep -f ~/Trimmomatic-0.38/adapters/TruSeq3-PE-2.fa SRR492065_1.unzip_for_quality.fastq
 ```
 This command above gives you many sequences, which mean this is the correct adapter sequences that you want to use. 
 
