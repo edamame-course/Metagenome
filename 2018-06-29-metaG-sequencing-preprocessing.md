@@ -135,10 +135,7 @@ This command above does not give you anything, which mean the sequences in the f
 ```
 grep -f ~Trimmomatic-0.38/adapters/TruSeq3-PE-2.fa SRR492065_1.unzip_for_quality.fastq
 ```
-This command above gives you many sequences, which mean this is the correct adapter sequences that you want to use. You can automate to check all six file with following commmand.
-```
-for x in ~/Trimmomatic-0.38/adapters/*;do echo $x;grep -f $x SRR492065_1.unzip_for_quality.fastq;done
-```
+This command above gives you many sequences, which mean this is the correct adapter sequences that you want to use. 
 
 Now, let's get trimmed.
 ```
