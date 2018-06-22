@@ -26,9 +26,9 @@ Bowtie2 is a read mapping software.
 
 ```
 cd 
-wget http://sourceforge.net/projects/bowtie-bio/files/bowtie2/2.2.9/bowtie2-2.2.9-linux-x86_64.zip
-unzip bowtie2-2.2.9-linux-x86_64.zip
-mv bowtie2-2.2.9 BT2_HOME
+wget https://sourceforge.net/projects/bowtie-bio/files/bowtie2/2.3.4.1/bowtie2-2.3.4.1-linux-x86_64.zip
+unzip bowtie2-2.3.4.1-linux-x86_64.zip
+mv bowtie2-2.3.4.1-linux-x86_64 BT2_HOME
 ```
 
 Set up the path to installed software  (you need to set up path again if you are logged in later):
@@ -46,9 +46,9 @@ sudo apt-get -y install libncurses5-dev libbz2-dev liblzma-dev
 ```
 now install samtools
 ```
-wget https://github.com/samtools/samtools/releases/download/1.5/samtools-1.5.tar.bz2
-tar xvjf samtools-1.5.tar.bz2
-cd samtools-1.5
+wget https://github.com/samtools/samtools/releases/download/1.8/samtools-1.8.tar.bz2
+tar xvjf samtools-1.8.tar.bz2
+cd samtools-1.8
 ./configure
 make
 ```
@@ -81,7 +81,7 @@ This file contains all of the information about where each read hits our referen
 Next, index the reference genome with samtools.  Another indexing step for memory efficiency for a different tool.  In the mapping world, get used to indexing since the files are huge:
 
 ```
-~/samtools-1.5/samtools faidx assembled.contigs.fa
+~/samtools-1.8/samtools faidx assembled.contigs.fa
 ```
 
 Convert the SAM into a BAM file ([What is the SAM/BAM?](https://samtools.github.io/hts-specs/SAMv1.pdf)):
@@ -90,7 +90,7 @@ To reduce the size of a SAM file, you can convert it to a BAM file (SAM to BAM!)
 
 ```
 for x in *.sam;
-  do ~/samtools-1.5/samtools import assembled.contigs.fa.fai $x $x.bam;
+  do ~/samtools-1.8/samtools import assembled.contigs.fa.fai $x $x.bam;
 done
 ```
 
@@ -98,21 +98,21 @@ Sort the BAM file - again this is a memory saving and sometimes required step, w
 ```
 mkdir tmp
 for x in *.bam;
-  do ~/samtools-1.5/samtools sort -T ./tmp/$x.sorted -o $x.sorted.bam $x;
+  do ~/samtools-1.8/samtools sort -T ./tmp/$x.sorted -o $x.sorted.bam $x;
 done
 ```
 
 And index the sorted BAM file:
 ```
 for x in *.sorted.bam;
-  do ~/samtools-1.5/samtools index $x;
+  do ~/samtools-1.8/samtools index $x;
 done
 ```
 
 ## Counting alignments
 This command:
 ```
-~/samtools-1.5/samtools view -c -f 4 SRR492065.sam.bam.sorted.bam
+~/samtools-1.8/samtools view -c -f 4 SRR492065.sam.bam.sorted.bam
 ```
 `-c` Instead of printing the alignments, only count them and print the total number. All filter options, such as -f, -F, and -q, are taken into account. `-f INT` Only output alignments with all bits set in INT present in the FLAG field. INT can be specified in hex by beginning with 0x (i.e. /^0x[0-9A-F]+/) or in octal by beginning with 0 (i.e. /^0[0-7]+/) [0]. 
 
@@ -124,7 +124,7 @@ will count how many reads DID NOT align to the reference (77608).
 This command:
 
 ```
-~/samtools-1.5/samtools view -c -F 4 SRR492065.sam.bam.sorted.bam
+~/samtools-1.8/samtools view -c -F 4 SRR492065.sam.bam.sorted.bam
 ```
 `-F INT` Do not output alignments with any bits set in INT present in the FLAG field. INT can be specified in hex by beginning with 0x (i.e. /^0x[0-9A-F]+/) or in octal by beginning with 0 (i.e. /^0[0-7]+/) [0].
 
@@ -148,7 +148,7 @@ You can find this information in `.out` file also.
 
 ```
 for x in *.sorted.bam
-do ~/samtools-1.5/samtools idxstats $x > $x.idxstats.txt
+do ~/samtools-1.8/samtools idxstats $x > $x.idxstats.txt
 done
 ```
 We have some scripts that we use to process this file.
