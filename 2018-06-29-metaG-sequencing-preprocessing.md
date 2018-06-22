@@ -124,7 +124,7 @@ cat before_trim.quality.txt
 
 The innerworkings:  -i: input file, -o: output file
 
-[img](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/fastqc.png)
+![img](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/fastqc.png)
 
 First, let's trim the sequencing adapters from our reads (these are artificial non-biological sequences and we want them out) and then we'll place all the paired end reads into one combined file. 
 
