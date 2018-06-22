@@ -66,10 +66,10 @@ You should slowly see something similar to the following output:
 ...and this is going to run for a while (perhaps until a k of 91 or greater) and eventually at the end you'll see something like this:
 
 ```
---- [Mon Jul 11 15:17:57 2016] Assembling contigs from SdBG for k = 99 ---
---- [Mon Jul 11 15:18:02 2016] Merging to output final contigs ---
---- [STAT] 2764 contigs, total 1377587 bp, min 216 bp, max 15822 bp, avg 498 bp, N50 491 bp
---- [Mon Jul 11 15:18:02 2016] ALL DONE. Time elapsed: 185.048481 seconds ---
+--- [Fri Jun 22 18:37:24 2018] Assembling contigs from SdBG for k = 119 ---
+--- [Fri Jun 22 18:37:31 2018] Merging to output final contigs ---
+--- [STAT] 3670 contigs, total 2977828 bp, min 211 bp, max 37252 bp, avg 811 bp, N50 942 bp
+--- [Fri Jun 22 18:37:31 2018] ALL DONE. Time elapsed: 503.442851 seconds ---
 ```
 
 In the end, your assembled contigs will be in the folder called `megahit_out` and the file is final.contigs.fa.  How do you take a look at that?  And now you have a de novo assembled reference for these itty bitty metagenomes, now go try it on your own datasets.  The next step is how to you use this reference to estimate gene abundances.
