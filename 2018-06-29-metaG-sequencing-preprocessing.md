@@ -124,6 +124,8 @@ cat before_trim.quality.txt
 
 The innerworkings:  -i: input file, -o: output file
 
+[img](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/fastqc.png)
+
 First, let's trim the sequencing adapters from our reads (these are artificial non-biological sequences and we want them out) and then we'll place all the paired end reads into one combined file. 
 
 Let's talk about sequencing adapter little more before we run Trimmomatic. When we run Trimmomatic, we are going to tell software which adapter I want to trim. Then, how I know which adapter that I use? First, you can ask sequencing center which adapter they use. Second, if you are a good bioinformatitian, you can figure out yourself. Here is how, there are common adapter sequences are provided in the folder ~/Trimmomatic-0.38/adapters/. You can see six files (NexteraPE-PE.fa,TruSeq2-PE.fa,TruSeq2-SE.fa,TruSeq3-PE-2.fa,TruSeq3-PE.fa,TruSeq3-SE.fa). Then you can figure out which adapter is used by using follow command.
