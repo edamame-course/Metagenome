@@ -35,10 +35,12 @@ First, there are many, many options for assembling metagenomic data.  Most assem
 
 We've gone to the trouble of installing some assembly programs to the EDAMAME [ami](), so feel free to experiment in your free time with other assemblers.  We'll be using a *newish* assembler, Megahit v1.0.6 ([program](https://github.com/voutcn/megahit) and [paper](http://www.sciencedirect.com/science/article/pii/S1046202315301183)), which has a couple of benefits for us.  One, the assembler is optimized for (i.e. designed to handle) metagenomic reads, and two, it's pretty fast (when compared to other assemblers (i.e. SPAdes) that provide good results on metagenomic data in addition to metagenomic data). 
 
-#### If your data is very big, so megahit cannto handle assembly, then you may consider remove redundant seqeunces using digital normalization
-[Here is the tutorial of digital normalization](https://github.com/edamame-course/Metagenome/blob/master/2016-07-15-metaG-assembly.md)
 
 ## Running megahit
+
+#### If your data is very big, so megahit cannot handle assembly, then you may consider remove redundant seqeunces using digital normalization
+[Here is the tutorial of digital normalization](https://github.com/edamame-course/Metagenome/blob/master/2016-07-15-metaG-assembly.md)
+
 
 First read the [megahit manual here](https://github.com/voutcn/megahit).  The paper can be found here: [Li, D., Luo, R., Liu, C.M., Leung, C.M., Ting, H.F., Sadakane, K., Yamashita, H. and Lam, T.W., 2016. MEGAHIT v1.0: A Fast and Scalable Metagenome Assembler driven by Advanced Methodologies and Community Practices. Methods.](http://www.sciencedirect.com/science/article/pii/S1046202315301183).
 
