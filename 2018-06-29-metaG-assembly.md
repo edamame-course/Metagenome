@@ -35,6 +35,8 @@ First, there are many, many options for assembling metagenomic data.  Most assem
 
 We've gone to the trouble of installing some assembly programs to the EDAMAME [ami](), so feel free to experiment in your free time with other assemblers.  We'll be using a *newish* assembler, Megahit v1.0.6 ([program](https://github.com/voutcn/megahit) and [paper](http://www.sciencedirect.com/science/article/pii/S1046202315301183)), which has a couple of benefits for us.  One, the assembler is optimized for (i.e. designed to handle) metagenomic reads, and two, it's pretty fast (when compared to other assemblers (i.e. SPAdes) that provide good results on metagenomic data in addition to metagenomic data). 
 
+[De Bruijn Graph](https://www.nature.com/articles/nbt.2023), [velvet](https://genome.cshlp.org/content/18/5/821.full)
+[Explanation of effect of k-mer size](https://github.com/rrwick/Bandage/wiki/Effect-of-kmer-size)
 
 ## Running megahit
 
