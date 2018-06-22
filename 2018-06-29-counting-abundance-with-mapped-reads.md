@@ -78,20 +78,15 @@ done
 
 This file contains all of the information about where each read hits our reference assembly contigs.
 
-Next, index the reference genome with samtools.  Another indexing step for memory efficiency for a different tool.  In the mapping world, get used to indexing since the files are huge:
+First, index the reference genome with samtools.  Another indexing step for memory efficiency for a different tool.  In the mapping world, get used to indexing since the files are huge:
 
-```
-~/samtools-1.8/samtools faidx assembled.contigs.fa
-```
+Second, Convert the SAM into a BAM file ([What is the SAM/BAM?](https://samtools.github.io/hts-specs/SAMv1.pdf)): To reduce the size of a SAM file, you can convert it to a BAM file (SAM to BAM!) - put simply, this compresses your giant SAM file.
 
-First, Convert the SAM into a BAM file ([What is the SAM/BAM?](https://samtools.github.io/hts-specs/SAMv1.pdf)):
-
-To reduce the size of a SAM file, you can convert it to a BAM file (SAM to BAM!) - put simply, this compresses your giant SAM file.
-
-Second, Sort the BAM file - again this is a memory saving and sometimes required step, we sort the data so its easy to query with our questions:
+Third, Sort the BAM file - again this is a memory saving and sometimes required step, we sort the data so its easy to query with our questions:
 
 Last, And index the sorted BAM file:
 ```
+~/samtools-1.8/samtools faidx assembled.contigs.fa
 for x in *.sam;do ~/samtools-1.8/samtools import assembled.contigs.fa.fai $x $x.bam;done
 mkdir tmp
 for x in *.bam;do ~/samtools-1.8/samtools sort -T ./tmp/$x.sorted -o $x.sorted.bam $x;done
