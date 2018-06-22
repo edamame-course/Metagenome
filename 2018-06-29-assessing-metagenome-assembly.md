@@ -44,8 +44,8 @@ Quast is a program that will calculate some statistics about our metagenome asse
 #### Install Quast
 ```
 cd
-curl -L https://sourceforge.net/projects/quast/files/quast-4.5.tar.gz/download > quast-4.5.tar.gz
-tar xvf quast-4.5.tar.gz
+curl -L https://sourceforge.net/projects/quast/files/quast-4.6.3.tar.gz/download > quast-4.6.3.tar.gz
+tar xvf quast-4.6.3.tar.gz
 ```
 
 ## Getting the data
@@ -62,7 +62,7 @@ Now we can take a look at our assembly using QUAST. **From the ~/metagenomics/as
 ##Looking at the assembly
 Run QUAST:
 ```
-~/quast-4.5/quast.py pe.se.final.contigs.fa -o report
+~/quast-4.6.3/quast.py pe.se.final.contigs.fa -o report
 ```
 Once QUAST has finished running, change into the quast_output directory and use `ls` to take a look at all of the files it created. Use `less` to examine the `report.txt` file. 
 ```
@@ -73,27 +73,27 @@ You should see:
 All statistics are based on contigs of size >= 500 bp, unless otherwise noted (e.g., "# contigs (>= 0 bp)" and "Total length (>= 0 bp)" include all contigs).
 
 Assembly                    pe.se.final.contigs
-# contigs (>= 0 bp)         2380               
-# contigs (>= 1000 bp)      883                
-# contigs (>= 5000 bp)      414                
-# contigs (>= 10000 bp)     244                
-# contigs (>= 25000 bp)     107                
-# contigs (>= 50000 bp)     42                 
-Total length (>= 0 bp)      12941251           
-Total length (>= 1000 bp)   12239621           
-Total length (>= 5000 bp)   11110462           
-Total length (>= 10000 bp)  9873116            
-Total length (>= 25000 bp)  7690252            
-Total length (>= 50000 bp)  5429748            
-# contigs                   1335               
-Largest contig              428449             
-Total length                12554273           
+# contigs (>= 0 bp)         2670               
+# contigs (>= 1000 bp)      1021               
+# contigs (>= 5000 bp)      455                
+# contigs (>= 10000 bp)     265                
+# contigs (>= 25000 bp)     117                
+# contigs (>= 50000 bp)     40                 
+Total length (>= 0 bp)      12958914           
+Total length (>= 1000 bp)   12177316           
+Total length (>= 5000 bp)   10827408           
+Total length (>= 10000 bp)  9482694            
+Total length (>= 25000 bp)  7172558            
+Total length (>= 50000 bp)  4430125            
+# contigs                   1537               
+Largest contig              282362             
+Total length                12541412           
 GC (%)                      39.44              
-N50                         38587              
-N75                         12783              
-L50                         62                 
-L75                         204                
-# N's per 100 kbp           0.00      
+N50                         32048              
+N75                         10401              
+L50                         86                 
+L75                         258                
+# N's per 100 kbp           0.00    
 ```
 N50 could be an important number. L50 (L75, LG50, LG75) is the number of contigs equal to or longer than N50 (N75, NG50, NG75)
 In other words, L50, for example, is the minimal number of contigs that cover half the assembly.
@@ -101,7 +101,7 @@ In other words, L50, for example, is the minimal number of contigs that cover ha
 ##Comparing and evaluating assemblies 
 Let's compare three assembly. The result from last tutorial, which used only paired end `pe.final.contigs.fa`, include single end `pe.se.final.contigs.fa`and assembly from raw read `raw.final.contigs.fa`. Those assebmly is done from full data (instead of substituted data). Note, When you compare assembly, all assembly sould be done from same dataset other than that, it dose not make sense. 
 ```
-~/quast-4.5/quast.py pe.final.contigs.fa se.final.contigs.fa pe.se.final.contigs.fa -o report_compare
+~/quast-4.6.3/quast.py pe.final.contigs.fa se.final.contigs.fa pe.se.final.contigs.fa -o report_compare
 ```
 then, open the result:
 ```
@@ -112,27 +112,27 @@ You will see.
 All statistics are based on contigs of size >= 500 bp, unless otherwise noted (e.g., "# contigs (>= 0 bp)" and "Total length (>= 0 bp)" include all contigs).
 
 Assembly                    pe.final.contigs  se.final.contigs  pe.se.final.contigs
-# contigs (>= 0 bp)         2367              2926              2380               
-# contigs (>= 1000 bp)      896               1285              883                
-# contigs (>= 5000 bp)      413               485               414                
-# contigs (>= 10000 bp)     246               257               244                
-# contigs (>= 25000 bp)     108               107               107                
-# contigs (>= 50000 bp)     43                37                42                 
-Total length (>= 0 bp)      12924337          12677989          12941251           
-Total length (>= 1000 bp)   12226262          11881360          12239621           
-Total length (>= 5000 bp)   11063653          9949140           11110462           
-Total length (>= 10000 bp)  9861702           8340326           9873116            
-Total length (>= 25000 bp)  7647216           6086492           7690252            
-Total length (>= 50000 bp)  5408515           3688622           5429748            
-# contigs                   1354              1867              1335               
-Largest contig              427295            238482            428449             
-Total length                12548148          12283090          12554273           
-GC (%)                      39.44             39.54             39.44              
-N50                         38068             24532             38587              
-N75                         12765             7009              12783              
-L50                         64                110               62                 
-L75                         207               362               204                
-# N's per 100 kbp           0.00              0.00              0.00 
+# contigs (>= 0 bp)         2707              3162              2670               
+# contigs (>= 1000 bp)      1064              1375              1021               
+# contigs (>= 5000 bp)      466               486               455                
+# contigs (>= 10000 bp)     276               246               265                
+# contigs (>= 25000 bp)     118               92                117                
+# contigs (>= 50000 bp)     42                37                40                 
+Total length (>= 0 bp)      12946382          12735336          12958914           
+Total length (>= 1000 bp)   12168690          11849449          12177316           
+Total length (>= 5000 bp)   10751027          9776456           10827408           
+Total length (>= 10000 bp)  9416243           8056968           9482694            
+Total length (>= 25000 bp)  6908964           5669988           7172558            
+Total length (>= 50000 bp)  4205980           3750850           4430125            
+# contigs                   1581              2038              1537               
+Largest contig              232526            232458            282362             
+Total length                12532010          12316301          12541412           
+GC (%)                      39.45             39.56             39.44              
+N50                         30749             22507             32048              
+N75                         10062             6464              10401              
+L50                         95                113               86                 
+L75                         275               392               258                
+# N's per 100 kbp           0.00              0.00              0.00     
 ```
 
 Another way to evaluate an assembly is using read orientation.  Paired end sequencing are two reads that we prepare to be a specific distance apart and in opposite directions.  We can look at mapped paired end reads to a reference genome or an assembled metagenome to assess "paired end concordance."  But first, you need to know how to map reads...
