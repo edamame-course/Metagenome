@@ -54,7 +54,7 @@ make
 
 You'll want to read the (minimal) manual first, but we're going to use a couple of flags.  We have to set the memory you will use in the analysis, I suggest for our case to use `-m 0.9` which means we'll use 90% of the available CPU memory.  You don't want to use 100% or your computer will not be able to run essential operations. default:0.9
 
-
+#### Assembly takes long time usully, so it is a good idea to use [tmux](https://github.com/edamame-course/2015-tutorials/blob/master/final/2015-06-22_tmux.md)
 Taking that into consideration, we're going to run this code:
 ```
 cd ~/metagenome
