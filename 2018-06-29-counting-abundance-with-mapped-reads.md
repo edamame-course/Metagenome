@@ -84,29 +84,18 @@ Next, index the reference genome with samtools.  Another indexing step for memor
 ~/samtools-1.8/samtools faidx assembled.contigs.fa
 ```
 
-Convert the SAM into a BAM file ([What is the SAM/BAM?](https://samtools.github.io/hts-specs/SAMv1.pdf)):
+First, Convert the SAM into a BAM file ([What is the SAM/BAM?](https://samtools.github.io/hts-specs/SAMv1.pdf)):
 
 To reduce the size of a SAM file, you can convert it to a BAM file (SAM to BAM!) - put simply, this compresses your giant SAM file.
 
-```
-for x in *.sam;
-  do ~/samtools-1.8/samtools import assembled.contigs.fa.fai $x $x.bam;
-done
-```
+Second, Sort the BAM file - again this is a memory saving and sometimes required step, we sort the data so its easy to query with our questions:
 
-Sort the BAM file - again this is a memory saving and sometimes required step, we sort the data so its easy to query with our questions:
+Last, And index the sorted BAM file:
 ```
+for x in *.sam;do ~/samtools-1.8/samtools import assembled.contigs.fa.fai $x $x.bam;done
 mkdir tmp
-for x in *.bam;
-  do ~/samtools-1.8/samtools sort -T ./tmp/$x.sorted -o $x.sorted.bam $x;
-done
-```
-
-And index the sorted BAM file:
-```
-for x in *.sorted.bam;
-  do ~/samtools-1.8/samtools index $x;
-done
+for x in *.bam;do ~/samtools-1.8/samtools sort -T ./tmp/$x.sorted -o $x.sorted.bam $x;done
+for x in *.sorted.bam;do ~/samtools-1.8/samtools index $x;done
 ```
 
 ## Counting alignments
@@ -162,33 +151,22 @@ And there you are - you've created an abundance table.  Like an OTU count table,
 
 
 ### Option 2: count each genes
-#### get gene calling
+#### get gene calling and make gtf
 ```
 curl -o mgm4753635.3.350.genecalling.coding.faa -X GET "http://api.metagenomics.anl.gov/1/download/mgm4753635.3?file=350.1"
-```
-
-#### make gtf
-```
 git clone https://github.com/metajinomics/mapping_tools.git
 python mapping_tools/350_to_gtf.py mgm4753635.3.350.genecalling.coding.faa > assmbly.gtf
 ```
 
 #### count using HTSeq
-install requirements
+install requirements and install HTseq (This step takes time)
 ```
 sudo apt-get install build-essential python2.7-dev python-numpy python-matplotlib python-pysam python-htseq
-```
-install HTseq (This step takes time)
-```
 pip install HTSeq
 ```
-running
+#### running HTSeq and merge
 ```
 for x in *.sorted.bam;do htseq-count -i gene_id -f bam $x assmbly.gtf > $x.htseq.count;done
-```
-
-#### merge
-```
 python mapping_tools/htseq_count_table.py *.count > gene_count.tsv
 ```
 
