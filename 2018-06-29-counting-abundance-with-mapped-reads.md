@@ -71,8 +71,8 @@ bowtie2-build assembled.contigs.fa reference
 ```
 Now, do the mapping of the raw reads to the reference genome (the -1 and -2 indicate the paired-end reads):
 ```
-for x in SRR*_1.sub.fastq.gz;
-  do bowtie2 -x reference -1 $x -2 ${x%_1*}_2.sub.fastq.gz -S ${x%_1*}.sam 2> ${x%_1*}.out;
+for x in SRR*r1.pe;
+  do bowtie2 -x reference -1 $x -2 ${x%r1*}r2.pe -S ${x%r1*}sam 2> ${x%r1*}out;
 done
 ```
 
@@ -103,7 +103,7 @@ This command:
 Here is the link that you can find the specific hex index:
 http://broadinstitute.github.io/picard/
 
-will count how many reads DID NOT align to the reference (77608).
+will count how many reads DID NOT align to the reference (63095).
 
 This command:
 
@@ -112,12 +112,12 @@ This command:
 ```
 `-F INT` Do not output alignments with any bits set in INT present in the FLAG field. INT can be specified in hex by beginning with 0x (i.e. /^0x[0-9A-F]+/) or in octal by beginning with 0 (i.e. /^0[0-7]+/) [0].
 
-will count how many reads DID align to the reference (122392).
+will count how many reads DID align to the reference (117723).
 
 And this command:
 
 ```
-gunzip -c SRR492065_1.sub.fastq.gz | wc
+wc SRR492065.r1.pe
 ```
 
 will tell you how many lines there are in the FASTQ file (100,000). Reminder: there are four lines for each sequence.
@@ -156,16 +156,18 @@ python mapping_tools/350_to_gtf.py mgm4753635.3.350.genecalling.coding.faa > ass
 #### count using HTSeq
 install requirements and install HTseq (This step takes time)
 ```
-sudo apt-get install build-essential python2.7-dev python-numpy python-matplotlib python-pysam python-htseq
+sudo apt-get -y install build-essential python2.7-dev python-numpy python-matplotlib python-pysam python-htseq
 pip install HTSeq
 ```
 #### running HTSeq and merge
 ```
 for x in *.sorted.bam;do htseq-count -i gene_id -f bam $x assmbly.gtf > $x.htseq.count;done
 python mapping_tools/htseq_count_table.py *.count > gene_count.tsv
+head gene_count.tsv
 ```
 
 ### download annotation
 ```
 curl -o mgm4753635.3.function_SEED.tab -X GET "http://api.metagenomics.anl.gov/1/annotation/similarity/mgm4753635.3?type=function&source=SEED"
+head mgm4753635.3.function_SEED.tab
 ```
